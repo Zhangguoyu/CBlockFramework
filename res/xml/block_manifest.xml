@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<manifest
+        xmlns:emoney="http://schemas.android.com/apk/res/com.zhangguoyu.demo.actionbar">
+    <block emoney:name=""
+            emoney:layout="@layout/demo"
+            emoney:orientation=""
+            emoney:id="@+id/demo_id"
+            emoney:title="@string/demo_menu"
+            emoney:tag="@string/demo_menu" />
+</manifest>

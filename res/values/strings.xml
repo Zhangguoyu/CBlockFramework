@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">DemoActionBar</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+	
+    <string name="demo_menu">Menu</string>
+    <string name="demo_menu2">Menu2</string>
+    <string name="internal_menu_more">More</string>
+</resources>

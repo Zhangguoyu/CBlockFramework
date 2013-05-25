@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ManifestBlock">
+        <attr name="name" format="string" />
+        <attr name="id" format="integer" />
+        <attr name="tag" format="reference" />
+        <attr name="orientation">
+            <flag name="portrait" value="1" />
+            <flag name="landscape" value="2" />
+            <flag name="unspecified" value="3" />
+        </attr>
+        <attr name="title" format="string" />
+        <attr name="layout" format="reference" />
+        <attr name="isMain" format="boolean" />
+    </declare-styleable>
+    
+</resources>

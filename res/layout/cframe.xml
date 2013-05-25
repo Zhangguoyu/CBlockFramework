@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:emoney="http://schemas.android.com/apk/res/com.zhangguoyu.demo.actionbar"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <com.zhangguoyu.widget.CTitleActionBarView
+        android:id="@id/actionbar_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ff0000"/>
+    
+    <FrameLayout 
+        android:id="@id/main_frame"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#222222">
+        
+    </FrameLayout>
+    
+    <com.zhangguoyu.widget.CNavigationActionBarView
+        emoney:displayCountLimits="5"
+        android:id="@id/navbar_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        emoney:moreIcon="@drawable/ic_menu_more"
+        emoney:moreTitle="@string/internal_menu_more"
+        android:background="#0000ff"/>
+    
+
+</LinearLayout>

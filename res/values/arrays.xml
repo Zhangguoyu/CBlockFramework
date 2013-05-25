@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="blocks">
+        <item >block0</item>
+        <item >block1</item>
+        <item >block2</item>
+    </string-array>
+    
+</resources>

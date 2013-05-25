@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="CBlock">
+        <attr name="blockName" format="string" />
+        <attr name="blockId" format="integer" />
+        <attr name="blockTag" format="string" />
+        <attr name="blockLayout" format="reference"/>
+        <attr name="blockTitle" format="string" />
+    </declare-styleable>
+    
+    <declare-styleable name="CBlockingView" parent="CBlock">
+    </declare-styleable>
+
+    <declare-styleable name="CMenuBarView">
+        <attr name="moreIcon" format="reference" />
+        <attr name="moreTitle" format="string" />
+        <attr name="displayCountLimits" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="CButtonBarView">
+        <attr name="menubarHeight" format="dimension" />
+        <attr name="itemBackground" format="reference" />
+        <attr name="itemMargin" format="dimension" />
+        <attr name="itemLeftMargin" format="dimension" />
+        <attr name="itemTopMargin" format="dimension" />
+        <attr name="itemRightMargin" format="dimension" />
+        <attr name="itemBottomMargin" format="dimension" />
+        <attr name="itemPadding" format="dimension" />
+        <attr name="itemLeftPadding" format="dimension" />
+        <attr name="itemTopPadding" format="dimension" />
+        <attr name="itemRightPadding" format="dimension" />
+        <attr name="itemBottomPadding" format="dimension" />
+        <attr name="itemTextSize" format="dimension" />
+        <attr name="itemTextColor" format="dimension" />
+        <attr name="itemTextTypeface" format="integer"/>
+        <attr name="itemTextFamilyName" format="string"/>
+        <attr name="itemTextStyle">
+            <flag name="sans" value="1" />
+            <flag name="serif" value="2" />
+            <flag name="monospace" value="3" />
+        </attr>
+        <attr name="itemTextShadowColor" format="color" />
+        <attr name="itemTextShadowDx" format="float" />
+        <attr name="itemTextShadowDy" format="float" />
+        <attr name="itemTextShadowRadius" format="float" />
+        <attr name="itemGravity" format="integer"/>
+    </declare-styleable>
+
+    <declare-styleable name="AppTheme">
+        <attr name="navigationBarStyle" format="reference" />
+        <attr name="tabBarStyle" format="reference" />
+    </declare-styleable>
+    
+</resources>
