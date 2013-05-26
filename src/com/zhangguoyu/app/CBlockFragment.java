@@ -37,13 +37,13 @@ public class CBlockFragment extends Fragment {
         mBlockRootLayout = new CFrameLayoutBlock(activity.getBaseContext());
 //        mBlockRootLayout.setBlock(mBlock);
         mBlock.setContainer(mBlockRootLayout);
-		mBlock.dispatchOnAttach(activity);
+//		mBlock.dispatchOnAttach(activity);
 	}
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		mBlock.dispatchOnActivityCreated(savedInstanceState);
+//		mBlock.dispatchOnActivityCreated(savedInstanceState);
 	}
 	
 	@Override
@@ -68,8 +68,8 @@ public class CBlockFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		mBlock.dispatchOnCreateView(inflater, mBlockRootLayout, savedInstanceState);
-        mBlock.dispatchOnCreate(savedInstanceState);
+//		mBlock.dispatchOnCreateView(inflater, mBlockRootLayout, savedInstanceState);
+//        mBlock.dispatchOnCreate(savedInstanceState);
         View view = mBlock.getContentView();
         if (view != null) {
             ViewGroup parent = (ViewGroup) view.getParent();
@@ -97,14 +97,14 @@ public class CBlockFragment extends Fragment {
 	@Override
 	public void onDestroyView() {
 		super.onDestroyView();
-        mBlock.dispatchOnDestroy();
-		mBlock.dispatchOnDestroyView();
+//        mBlock.dispatchOnDestroy();
+//		mBlock.dispatchOnDestroyView();
 	}
 	
 	@Override
 	public void onDetach() {
 		super.onDetach();
-		mBlock.dispatchOnDetach();
+//		mBlock.dispatchOnDetach();
 	}
 	
 	@Override
@@ -123,23 +123,19 @@ public class CBlockFragment extends Fragment {
 	@Override
 	public void onLowMemory() {
 		super.onLowMemory();
-		mBlock.dispatchOnLowMemory();
+//		mBlock.dispatchOnLowMemory();
 	}
 	
 	@Override
 	public void onPause() {
 		super.onPause();
-		mBlock.dispatchOnPause();
-
-        Log.d(LOG_TAG, "@@@ onPause " + mBlock.getClass().getSimpleName());
+//		mBlock.dispatchOnPause();
 	}
 	
 	@Override
 	public void onResume() {
 		super.onResume();
-		mBlock.dispatchOnResume();
-
-        Log.d(LOG_TAG, "@@@ onResume " + mBlock.getClass().getSimpleName());
+//		mBlock.dispatchOnResume();
 	}
 	
 	@Override
@@ -151,17 +147,13 @@ public class CBlockFragment extends Fragment {
 	@Override
 	public void onStart() {
 		super.onStart();
-		mBlock.dispatchOnStart();
-
-        Log.d(LOG_TAG, "@@@ onStart " + mBlock.getClass().getSimpleName());
+//		mBlock.dispatchOnStart();
 	}
 	
 	@Override
 	public void onStop() {
 		super.onStop();
-		mBlock.dispatchOnStop();
-
-        Log.d(LOG_TAG, "@@@ onStop " + mBlock.getClass().getSimpleName());
+//		mBlock.dispatchOnStop();
 	}
 	
 	@Override

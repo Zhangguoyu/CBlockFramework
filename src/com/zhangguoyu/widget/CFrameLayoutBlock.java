@@ -6,8 +6,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.View;
 import android.view.ViewParent;
 import android.widget.FrameLayout;
 import com.zhangguoyu.app.CBlock;
@@ -67,17 +65,18 @@ public class CFrameLayoutBlock extends FrameLayout implements CBlockingView {
         CBlock parentBlock = null;
         ViewParent parent = getParent();
         while(parent != null) {
-            if (!(parent instanceof CBlockingView)) {
-                parent = parent.getParent();
-                continue;
+            if (parent instanceof CBlockingView) {
+                mParent = ((CBlockingView) parent).getBlock();
+                if (mParent != null) {
+                    break;
+                }
             }
 
-            mParent = ((CBlockingView) parent).getBlock();
-            break;
+            parent = parent.getParent();
         }
 
         if (mParent != null && mBlock != null) {
-            mBlock.attachToParent(parentBlock, true);
+            mBlock.attachToParent(parentBlock);
         }
     }
 

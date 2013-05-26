@@ -9,7 +9,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.Xml;
+import android.view.ViewGroup;
 import com.zhangguoyu.demo.actionbar.R;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -23,6 +25,8 @@ import java.util.HashMap;
  */
 public class CBlockManager {
 
+    private static final String LOG_TAG = CBlockManager.class.getSimpleName();
+
     private static class Instance {
         static HashMap<Integer, CBlockManager> MAP = new HashMap<Integer, CBlockManager>();
     }
@@ -33,6 +37,10 @@ public class CBlockManager {
 
     private CBlock mMainBlock = null;
     private Bundle mSavedBundle = null;
+
+    private int mCurrentState = CBlock.NO_STATE;
+    private SavedState mSavedState = null;
+    private ViewGroup mFrame = null;
 
     public static CBlockManager newInstance(CBlockActivity activity) {
         CBlockManager bm = null;
@@ -51,6 +59,7 @@ public class CBlockManager {
 
     private CBlockManager(CBlockActivity activity) {
         mActivity = activity;
+        mFrame = (ViewGroup) activity.findViewById(R.id.main_frame);
     }
 
     public void parseBlockMainfestFromXml(int xmlResId) {
@@ -99,6 +108,7 @@ public class CBlockManager {
                             if (info.isMain) {
                                 mMainBlock = buildMainBlock(info.className);
                                 mActivity.attachMainBlock(mMainBlock);
+                                mMainBlock.setContainer(mFrame);
                             }
 
                             mBlockInfoList.add(info);
@@ -226,46 +236,41 @@ public class CBlockManager {
     }
 
     public void dispatchCreate() {
-        if (mMainBlock != null) {
-            mMainBlock.dispatchOnCreate(null);
-        }
+        mCurrentState = CBlock.STATE_CREATE;
+        syncStateToBlock(mMainBlock);
     }
 
     public void dispatchStart() {
-        if (mMainBlock != null) {
-            mMainBlock.dispatchOnStart();
-        }
+        mCurrentState = CBlock.STATE_START;
+        syncStateToBlock(mMainBlock);
     }
 
     public void dispatchResume() {
-        if (mMainBlock != null) {
-            mMainBlock.dispatchOnResume();
-        }
+        mCurrentState = CBlock.STATE_RESUME;
+        syncStateToBlock(mMainBlock);
     }
 
     public void dispatchPause() {
-        if (mMainBlock != null) {
-            mMainBlock.dispatchOnPause();
-        }
+        mCurrentState = CBlock.STATE_START;
+        syncStateToBlock(mMainBlock);
     }
 
     public void dispatchStop() {
-        if (mMainBlock != null) {
-            mMainBlock.dispatchOnStop();
-        }
+        mCurrentState = CBlock.STATE_CREATE;
+        syncStateToBlock(mMainBlock);
     }
 
     public void dispatchDestroy() {
-        if (mMainBlock != null) {
-            mMainBlock.dispatchOnDestroy();
-        }
+        mCurrentState = CBlock.STATE_INITIALIZING;
+        syncStateToBlock(mMainBlock);
     }
 
-    public void dispatchSaveInstanceState(Parcelable savedState) {
+    public void dispatchSaveInstanceState(Bundle savedState) {
         if (mMainBlock != null) {
             if (mSavedBundle == null) {
                 mSavedBundle = new Bundle();
             }
+
             mMainBlock.dispatchOnSaveInstanceState(mSavedBundle);
         }
     }
@@ -283,31 +288,47 @@ public class CBlockManager {
     }
 
     Parcelable saveState() {
-        if (mMainBlock != null) {
-            SavedState ss = new SavedState();
-            dispatchSaveInstanceState(ss);
-            return ss;
+        if (mSavedState == null) {
+            mSavedState = new SavedState();
         }
-        return null;
+        mSavedState.currState = mCurrentState;
+        if (mBlockInfoList != null) {
+            final int size = mBlockInfoList.size();
+            if (size > 0) {
+                mSavedState.blockInfoInstanceStates = new Parcelable[size];
+                for (int i=0; i<size; i++) {
+                    mSavedState.blockInfoInstanceStates[i] = mBlockInfoList.get(i);
+                }
+            }
+        }
+        if (mMainBlock != null) {
+            if (mSavedState.blockInstanceState == null) {
+                mSavedState.blockInstanceState = new Bundle();
+            }
+            mMainBlock.performSaveInstanceState(mSavedState.blockInstanceState);
+        }
+        return mSavedState;
     }
 
-    public static class CBlockInfo {
+    public static class CBlockInfo implements Parcelable {
+
         public int id = CBlock.NO_ID;
         public CharSequence title = null;
         public int layoutResId = 0;
         public Object tag = null;
         public String className = null;
         public boolean isMain = false;
-    }
 
-    public static class SavedState implements Parcelable {
+        public CBlockInfo() {}
 
-        Bundle savedBundle = null;
-
-        SavedState() {}
-
-        SavedState(Parcel in) {
-
+        public CBlockInfo(Parcel in) {
+            super();
+            id = in.readInt();
+            title = in.readString();
+            layoutResId = in.readInt();
+            tag = in.readValue(getClass().getClassLoader());
+            className = in.readString();
+            isMain = in.readInt()==1;
         }
 
         @Override
@@ -317,7 +338,115 @@ public class CBlockManager {
 
         @Override
         public void writeToParcel(Parcel parcel, int i) {
+            parcel.writeInt(id);
+            parcel.writeString(title.toString());
+            parcel.writeInt(layoutResId);
+            parcel.writeValue(tag);
+            parcel.writeString(className);
+            parcel.writeInt(isMain?1:0);
+        }
 
+        public static final Creator<CBlockInfo> CREATOR = new Creator<CBlockInfo>() {
+            @Override
+            public CBlockInfo createFromParcel(Parcel parcel) {
+                return new CBlockInfo(parcel);
+            }
+
+            @Override
+            public CBlockInfo[] newArray(int i) {
+                return new CBlockInfo[i];
+            }
+        };
+    }
+
+    void syncStateToBlock(CBlock blockForSyncing) {
+        syncStateToBlock(blockForSyncing, mCurrentState);
+    }
+
+    private void syncStateToBlock(CBlock blockForSyncing, int stateSynced) {
+        Log.d(LOG_TAG, "@@@ syncStateToBlock " + blockForSyncing.getState() + ", curr state " + stateSynced);
+        //block can not be null.
+        if (blockForSyncing == null) {
+            return;
+        }
+        //No need to sync，if the state of block equal with the current state of context
+        if (blockForSyncing.getState() == stateSynced) {
+            return;
+        }
+
+        final int blockState = blockForSyncing.getState();
+        if (blockState < stateSynced) { //active process
+            switch (blockState) {
+                case CBlock.NO_STATE:
+                case CBlock.STATE_INITIALIZING:
+                    if (stateSynced > CBlock.STATE_INITIALIZING) {
+                        //handle the attach from the none
+                        blockForSyncing.performAttach(mActivity);
+                        //handle the create from the attach
+                        blockForSyncing.performCreate(mSavedBundle);
+                    }
+                case CBlock.STATE_CREATE:
+                    if (stateSynced > CBlock.STATE_CREATE) {
+                        //handle the start from the create
+                        blockForSyncing.performStart();
+                    }
+                case CBlock.STATE_START:
+                    if (stateSynced > CBlock.STATE_START) {
+                        //handle the resume from the start
+                        blockForSyncing.performResume();
+                    }
+            }
+        } else if (blockState > stateSynced) { //negative process
+            switch (blockState) {
+                case CBlock.STATE_RESUME:
+                    if (stateSynced < CBlock.STATE_RESUME) {
+                        //handle the pause from the resume
+                        blockForSyncing.performPause();
+                    }
+                case CBlock.STATE_START:
+                    if (stateSynced < CBlock.STATE_START) {
+                        //handle the stop from the pause
+                        blockForSyncing.performStop();
+                    }
+                case CBlock.STATE_CREATE:
+                    if (stateSynced < CBlock.STATE_CREATE) {
+                        //handle the destroy from the stop
+                        blockForSyncing.performDestroy();
+                    }
+                case CBlock.STATE_INITIALIZING:
+                    if (stateSynced < CBlock.STATE_INITIALIZING) {
+                        //handle the detach from the destroy
+                        blockForSyncing.performDetach();
+                    }
+            }
+        }
+
+        blockForSyncing.setState(stateSynced);
+
+    }
+
+    public static class SavedState implements Parcelable {
+
+        Parcelable[] blockInfoInstanceStates = null;
+        int currState = 0;
+        Bundle blockInstanceState = null;
+
+        SavedState() {}
+
+        SavedState(Parcel in) {
+            blockInfoInstanceStates = in.readParcelableArray(getClass().getClassLoader());
+            currState = in.readInt();
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel parcel, int i) {
+            parcel.writeParcelableArray(blockInfoInstanceStates, i);
+            parcel.writeInt(currState);
         }
 
         public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {

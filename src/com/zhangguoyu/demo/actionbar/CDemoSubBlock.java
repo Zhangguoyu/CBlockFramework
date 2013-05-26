@@ -19,7 +19,7 @@ public class CDemoSubBlock extends CBlock implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("CDemoSubBlock", "@@@ onCreate " + getClass().getName());
+
         setContentView(R.layout.demo2);
 
         Bundle args = getArguments();

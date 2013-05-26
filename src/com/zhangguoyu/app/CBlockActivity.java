@@ -11,7 +11,7 @@ public class CBlockActivity extends CActivity {
 
 	private static final String BLOCK_TAG = "cn.emoney.level2.block";
     private static final String META_DATA_KEY_MANIFEST = "blockManifest";
-    private CBlockManager mBlockManger = null;
+    private CBlockManager mBlockManager = null;
 
     private CBlock mCurrentBlock = null;
 
@@ -19,7 +19,7 @@ public class CBlockActivity extends CActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-        mBlockManger = CBlockManager.newInstance(this);
+        mBlockManager = CBlockManager.newInstance(this);
         getSupportActionBar().setDisplayShowBackButtonEnable(false);
 
 		try {
@@ -28,54 +28,53 @@ public class CBlockActivity extends CActivity {
 			final Bundle metaData = info.metaData;
             int manifestResId = metaData.getInt(META_DATA_KEY_MANIFEST);
 
-            mBlockManger.parseBlockMainfestFromXml(manifestResId);
+            mBlockManager.parseBlockMainfestFromXml(manifestResId);
 
 		} catch (NameNotFoundException e) {
 			e.printStackTrace();
         }
 
-        if (savedInstanceState != null) {
-            Parcelable state = savedInstanceState.getParcelable(BLOCK_TAG);
-            mBlockManger.restoreState(state);
-        }
-
-        mBlockManger.dispatchCreate();
+        mBlockManager.dispatchCreate();
+//        if (savedInstanceState != null) {
+//            Parcelable state = savedInstanceState.getParcelable(BLOCK_TAG);
+//            mBlockManager.restoreState(state);
+//        }
 	}
 
     @Override
     protected void onStart() {
         super.onStart();
-        mBlockManger.dispatchStart();
+        mBlockManager.dispatchStart();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mBlockManger.dispatchResume();
+        mBlockManager.dispatchResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mBlockManger.dispatchPause();
+        mBlockManager.dispatchPause();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        mBlockManger.dispatchStop();
+        mBlockManager.dispatchStop();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mBlockManger.dispatchDestroy();
+        mBlockManager.dispatchDestroy();
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        Parcelable saveState = mBlockManger.saveState();
+        Parcelable saveState = mBlockManager.saveState();
         if (saveState != null) {
             outState.putParcelable(BLOCK_TAG, saveState);
         }
@@ -87,7 +86,7 @@ public class CBlockActivity extends CActivity {
     }
 
     public void startBlock(Object tag, Bundle args) {
-        CBlockManager.CBlockInfo blockInfo = mBlockManger.findBlockInfoWithTag(tag);
+        CBlockManager.CBlockInfo blockInfo = mBlockManager.findBlockInfoWithTag(tag);
         if (blockInfo == null) {
             throw new CBlockNotFoundException();
         }
@@ -106,7 +105,7 @@ public class CBlockActivity extends CActivity {
 
     public void startBlock(int id, Bundle args) {
 
-        CBlockManager.CBlockInfo blockInfo = mBlockManger.findBlockInfoById(id);
+        CBlockManager.CBlockInfo blockInfo = mBlockManager.findBlockInfoById(id);
         if (blockInfo == null) {
             throw new CBlockNotFoundException();
         }
@@ -154,7 +153,7 @@ public class CBlockActivity extends CActivity {
     }
 
     public CBlockManager getBlockManager() {
-        return mBlockManger;
+        return mBlockManager;
     }
 
     void setCurrentBlock(CBlock current) {
@@ -169,13 +168,5 @@ public class CBlockActivity extends CActivity {
     public CBlock getCurrentBlock() {
         return mCurrentBlock;
     }
-
-	private static class FrameFragment extends CBlockFragment {
-
-		static FrameFragment newInstance() {
-			return new FrameFragment();
-		}
-
-	}
 
 }
