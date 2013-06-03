@@ -19,6 +19,7 @@ import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 /**
  * Created by zhangguoyu on 13-5-23.
@@ -460,6 +461,44 @@ public class CBlockManager {
                 return new SavedState[i];
             }
         };
+    }
+
+    private class BlockBackStack {
+
+        CBlock mCurr = null;
+        LinkedList<CBlock> mStack = null;
+
+        BlockBackStack() {}
+
+        void push(CBlock block) {
+
+            if (mCurr == null) {
+                mCurr = block;
+
+            } else {
+                if (mStack == null) {
+                    mStack = new LinkedList<CBlock>();
+                }
+
+                mStack.addFirst(mCurr);
+                mCurr = block;
+            }
+        }
+
+        CBlock pop() {
+            if (mStack != null && !mStack.isEmpty()) {
+                mCurr = mStack.removeFirst();
+            }
+            return mCurr;
+        }
+
+        int size() {
+            if (mStack != null) {
+                return mStack.size();
+            }
+
+            return 0;
+        }
     }
 
 }

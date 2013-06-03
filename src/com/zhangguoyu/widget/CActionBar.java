@@ -13,136 +13,144 @@ public abstract class CActionBar {
     public static final int TITLE_STYLE_SUBTITLED = 2;
 
     public static final int TITLE_STYLE_CSTOCK = 3;
+
+    public static final int TITLE_EVENT_TYPE_CLICK_MAIN_TITLE = 0;
+
+    public static final int TITLE_EVENT_TYPE_CLICK_SUBTITLE = 1;
+
+    public static final int TITLE_EVENT_TYPE_CLICK_LEFT_NAV = 2;
+
+    public static final int TITLE_EVENT_TYPE_CLICK_RIGHT_NAV = 3;
     /**
-     * ÉèÖÃlogoÊÓÍ¼
+     * ï¿½ï¿½ï¿½ï¿½logoï¿½ï¿½Í¼
      * @param view
      * @return
      */
 	public abstract CActionBar setLogoView(View view);
 
     /**
-     * ÉèÖÃ·µ»Ø°´Å¥ÊÓÍ¼
+     * ï¿½ï¿½ï¿½Ã·ï¿½ï¿½Ø°ï¿½Å¥ï¿½ï¿½Í¼
      * @param view
      * @return
      */
 	public abstract CActionBar setBackButton(View view);
 
     /**
-     * ÉèÖÃ±êÌâÊÓÍ¼
+     * ï¿½ï¿½ï¿½Ã±ï¿½ï¿½ï¿½ï¿½ï¿½Í¼
      * @param view
      * @return
      */
 	public abstract CActionBar setTitleView(View view);
 
     /**
-     * ÉèÖÃ±êÌâÀ¸ÓÒ²àÑ¡Ïî°´Å¥ÊÓÍ¼
+     * ï¿½ï¿½ï¿½Ã±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò²ï¿½Ñ¡ï¿½î°´Å¥ï¿½ï¿½Í¼
      * @param view
      * @return
      */
 	public abstract CActionBar setOptionsView(View view);
 
     /**
-     * ÉèÖÃ×Ô¶¨ÒåÊÓÍ¼£¬¸ÃÊÓÍ¼»áÏÔÊ¾ÔÚLogoºÍ±êÌâÖ®¼ä
+     * ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½Logoï¿½Í±ï¿½ï¿½ï¿½Ö®ï¿½ï¿½
      * @param view
      * @return
      */
 	public abstract CActionBar setCustomView(View view);
 
     /**
-     * ÉèÖÃlogoÍ¼Æ¬
+     * ï¿½ï¿½ï¿½ï¿½logoÍ¼Æ¬
      * @param resId
      * @return
      */
 	public abstract CActionBar setLogo(int resId);
 
     /**
-     * ÉèÖÃlogoÍ¼Æ¬
+     * ï¿½ï¿½ï¿½ï¿½logoÍ¼Æ¬
      * @param drawable
      * @return
      */
 	public abstract CActionBar setLogo(Drawable drawable);
 
     /**
-     * ÉèÖÃ·µ»Ø°´Å¥Í¼Æ¬
+     * ï¿½ï¿½ï¿½Ã·ï¿½ï¿½Ø°ï¿½Å¥Í¼Æ¬
      * @param resId
      * @return
      */
 	public abstract CActionBar setBackDrawable(int resId);
 
     /**
-     * ÉèÖÃ·µ»Ø°´Å¥Í¼Æ¬
+     * ï¿½ï¿½ï¿½Ã·ï¿½ï¿½Ø°ï¿½Å¥Í¼Æ¬
      * @param drawable
      * @return
      */
 	public abstract CActionBar setBackDrawable(Drawable drawable);
 
     /**
-     * ÉèÖÃ±êÌâ
+     * ï¿½ï¿½ï¿½Ã±ï¿½ï¿½ï¿½
      * @param resId
      * @return
      */
 	public abstract CActionBar setTitle(int resId);
 
     /**
-     * ÉèÖÃ±êÌâ
+     * ï¿½ï¿½ï¿½Ã±ï¿½ï¿½ï¿½
      * @param title
      * @return
      */
 	public abstract CActionBar setTitle(CharSequence title);
 
     /**
-     * ÉèÖÃ×Ó±êÌâ
+     * ï¿½ï¿½ï¿½ï¿½ï¿½Ó±ï¿½ï¿½ï¿½
      * @param resId
      * @return
      */
 	public abstract CActionBar setSubTitle(int resId);
 
     /**
-     * ÉèÖÃ×Ó±êÌâ
+     * ï¿½ï¿½ï¿½ï¿½ï¿½Ó±ï¿½ï¿½ï¿½
      * @param subTitle
      * @return
      */
 	public abstract CActionBar setSubTitle(CharSequence subTitle);
 
     /**
-     * ÏÔÊ¾ActionBar
+     * ï¿½ï¿½Ê¾ActionBar
      */
 	public abstract void show();
 
     /**
-     * Òþ²ØActionBar
+     * ï¿½ï¿½ï¿½ï¿½ActionBar
      */
 	public abstract void hide();
 
     /**
-     * ÅÐ¶ÏActionBarÊÇ·ñÏÔÊ¾
+     * ï¿½Ð¶ï¿½ActionBarï¿½Ç·ï¿½ï¿½ï¿½Ê¾
      * @return
      */
 	public abstract boolean isShowing();
 
     /**
-     * ÉèÖÃActionBar±³¾°
+     * ï¿½ï¿½ï¿½ï¿½ActionBarï¿½ï¿½ï¿½ï¿½
      * @param resId
      * @return
      */
 	public abstract CActionBar setBackground(int resId);
 
     /**
-     * ÉèÖÃActionBar±³¾°
+     * ï¿½ï¿½ï¿½ï¿½ActionBarï¿½ï¿½ï¿½ï¿½
      * @param drawable
      * @return
      */
 	public abstract CActionBar setBackground(Drawable drawable);
 
     /**
-     * ÉèÖÃ·µ»Ø°´Å¥ÏÔÊ¾»òÕßÒþ²Ø
+     * ï¿½ï¿½ï¿½Ã·ï¿½ï¿½Ø°ï¿½Å¥ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      * @param showBackButton
      * @return
      */
 	public abstract CActionBar setDisplayShowBackButtonEnable(boolean showBackButton);
 
     /**
-     * ÉèÖÃ·µ»Ø°´Å¥°éËæ×Å¶¯»­ÏÔÊ¾»òÕßÒþ²Ø
+     * ï¿½ï¿½ï¿½Ã·ï¿½ï¿½Ø°ï¿½Å¥ï¿½ï¿½ï¿½ï¿½ï¿½Å¶ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      * @param showBackButton
      * @param anim
      * @return
@@ -150,7 +158,7 @@ public abstract class CActionBar {
     public abstract CActionBar setDisplayShowBackButtonEnableWithAnimation(boolean showBackButton, Animation anim);
 
     /**
-     * ÉèÖÃ·µ»Ø°´Å¥°éËæ×Å¶¯»­ÏÔÊ¾»òÕßÒþ²Ø
+     * ï¿½ï¿½ï¿½Ã·ï¿½ï¿½Ø°ï¿½Å¥ï¿½ï¿½ï¿½ï¿½ï¿½Å¶ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      * @param showBackButton
      * @param anim
      * @return
@@ -158,14 +166,14 @@ public abstract class CActionBar {
     public abstract CActionBar setDisplayShowBackButtonEnableWithAnimation(boolean showBackButton, int anim);
 
     /**
-     * ÉèÖÃlogoÏÔÊ¾»òÕßÒþ²Ø
+     * ï¿½ï¿½ï¿½ï¿½logoï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      * @param showLogo
      * @return
      */
 	public abstract CActionBar setDisplayShowLogoEnable(boolean showLogo);
 
     /**
-     * ÉèÖÃlogo°éËæ¶¯»­ÏÔÊ¾»òÕßÒþ²Ø
+     * ï¿½ï¿½ï¿½ï¿½logoï¿½ï¿½ï¿½æ¶¯ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      * @param showLogo
      * @param anim
      * @return
@@ -173,7 +181,7 @@ public abstract class CActionBar {
     public abstract CActionBar setDisplayShowLogoEnableWithAnimation(boolean showLogo, Animation anim);
 
     /**
-     * ÉèÖÃlogo°éËæ¶¯»­ÏÔÊ¾»òÕßÒþ²Ø
+     * ï¿½ï¿½ï¿½ï¿½logoï¿½ï¿½ï¿½æ¶¯ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      * @param showLogo
      * @param anim
      * @return
@@ -181,14 +189,14 @@ public abstract class CActionBar {
     public abstract CActionBar setDisplayShowLogoEnableWithAnimation(boolean showLogo, int anim);
 
     /**
-     * ÉèÖÃ×Ô¶¨ÒåviewÏÔÊ¾»òÕßÒþ²Ø
+     * ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½viewï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      * @param showCustom
      * @return
      */
 	public abstract CActionBar setDisplayShowCustomEnable(boolean showCustom);
 
     /**
-     * ÉèÖÃ×Ô¶¨Òåview°éËæ¶¯»­ÏÔÊ¾»òÕßÒþ²Ø
+     * ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½viewï¿½ï¿½ï¿½æ¶¯ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      * @param showCustom
      * @param anim
      * @return
@@ -196,7 +204,7 @@ public abstract class CActionBar {
     public abstract CActionBar setDisplayShowCustomEnableWithAnimation(boolean showCustom, Animation anim);
 
     /**
-     * ÉèÖÃ×Ô¶¨Òåview°éËæ¶¯»­ÏÔÊ¾»òÕßÒþ²Ø
+     * ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½viewï¿½ï¿½ï¿½æ¶¯ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      * @param showCustom
      * @param anim
      * @return
@@ -204,14 +212,14 @@ public abstract class CActionBar {
     public abstract CActionBar setDisplayShowCustomEnableWithAnimation(boolean showCustom, int anim);
 
     /**
-     * ÉèÖÃ±êÌâÏÔÊ¾»òÕßÒþ²Ø
+     * ï¿½ï¿½ï¿½Ã±ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      * @param showTitle
      * @return
      */
 	public abstract CActionBar setDisplayShowTitleEnable(boolean showTitle);
 
     /**
-     * ÉèÖÃ±êÌâ°éËæ¶¯»­ÏÔÊ¾»òÕßÒþ²Ø
+     * ï¿½ï¿½ï¿½Ã±ï¿½ï¿½ï¿½ï¿½ï¿½æ¶¯ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      * @param showTitle
      * @param anim
      * @return
@@ -219,7 +227,7 @@ public abstract class CActionBar {
     public abstract CActionBar setDisplayShowTitleEnableWithAnimation(boolean showTitle, Animation anim);
 
     /**
-     * ÉèÖÃ±êÌâ°éËæ¶¯»­ÏÔÊ¾»òÕßÒþ²Ø
+     * ï¿½ï¿½ï¿½Ã±ï¿½ï¿½ï¿½ï¿½ï¿½æ¶¯ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      * @param showTitle
      * @param anim
      * @return
@@ -227,157 +235,157 @@ public abstract class CActionBar {
     public abstract CActionBar setDisplayShowTitleEnableWithAnimation(boolean showTitle, int anim);
 
     /**
-     * ´´½¨Ò»¸ötab
+     * ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½tab
      * @return
      */
 	public abstract CTab buildTab();
 
     /**
-     * »ñÈ¡µ±Ç°Ñ¡ÔñµÄtab
+     * ï¿½ï¿½È¡ï¿½ï¿½Ç°Ñ¡ï¿½ï¿½ï¿½tab
      * @return
      */
 	public abstract CTab getSelectedTab();
 
     /**
-     * »ñÈ¡µ±Ç°TabµÄ×ÜÊý
+     * ï¿½ï¿½È¡ï¿½ï¿½Ç°Tabï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      * @return
      */
 	public abstract int getTabCount();
 
     /**
-     * ¸ù¾ÝÖ¸¶¨µÄË÷Òýindex»ñÈ¡tab
+     * ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½indexï¿½ï¿½È¡tab
      * @param index
      * @return
      */
 	public abstract CTab getTabAt(int index);
 
     /**
-     * Ìí¼Ótabµ½ActionBar
+     * ï¿½ï¿½ï¿½tabï¿½ï¿½ActionBar
      * @param tab
      * @return
      */
 	public abstract CActionBar addTab(CTab tab);
 
     /**
-     * ¸ù¾ÝÖ¸¶¨µÄÎ»ÖÃÌí¼Ótabµ½ActionBar
+     * ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½tabï¿½ï¿½ActionBar
      * @param tab
      * @return
      */
 	public abstract CActionBar addTab(CTab tab, int position);
 
     /**
-     * Ìí¼Ótabµ½ActionBar£¬²¢ÉèÖÃÊÇ·ñÎªÑ¡ÖÐ×´Ì¬
+     * ï¿½ï¿½ï¿½tabï¿½ï¿½ActionBarï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ÎªÑ¡ï¿½ï¿½×´Ì¬
      * @param tab
      * @return
      */
 	public abstract CActionBar addTab(CTab tab, boolean selected);
 
     /**
-     * ¸ù¾ÝÖ¸¶¨µÄÎ»ÖÃÌí¼Ótabµ½ActionBar£¬²¢ÉèÖÃÊÇ·ñÎªÑ¡ÖÐ×´Ì¬
+     * ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½tabï¿½ï¿½ActionBarï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ÎªÑ¡ï¿½ï¿½×´Ì¬
      * @param tab
      * @return
      */
 	public abstract CActionBar addTab(CTab tab, int position, boolean selected);
 
     /**
-     * Ñ¡ÖÐtab
+     * Ñ¡ï¿½ï¿½tab
      * @param tab
      */
 	public abstract void selectTab(CTab tab);
 
     /**
-     * ÒÆ³ýÖ¸¶¨Î»ÖÃµÄtab
+     * ï¿½Æ³ï¿½Ö¸ï¿½ï¿½Î»ï¿½Ãµï¿½tab
      * @param index
      * @return
      */
 	public abstract CActionBar removeTabAt(int index);
 
     /**
-     * ÒÆ³ýÖ¸¶¨µÄtab
+     * ï¿½Æ³ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½tab
      * @param tab
      * @return
      */
 	public abstract CActionBar removeTab(CTab tab);
 
     /**
-     * ÒÆ³ýËùÓÐtab
+     * ï¿½Æ³ï¿½ï¿½ï¿½ï¿½ï¿½tab
      * @return
      */
 	public abstract CActionBar removeAllTabs();
     public abstract CActionBar setTitleStyle(int titleViewStyle);
 	
     /**
-     * ÉèÖÃµ×²¿µ¼º½À¸±³¾°
+     * ï¿½ï¿½ï¿½Ãµ×²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      * @param drawable
      * @return
      */
 	public abstract CActionBar setNavigationBarBackground(Drawable drawable);
 
     /**
-     * ÉèÖÃµ×²¿µ¼º½À¸±³¾°
+     * ï¿½ï¿½ï¿½Ãµ×²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      * @param resId
      * @return
      */
 	public abstract CActionBar setNavigationBarBackground(int resId);
 	
 	/**
-     * ÉèÖÃµ¼º½°´Å¥ÏîµÄ±³¾°
+     * ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½Å¥ï¿½ï¿½Ä±ï¿½ï¿½ï¿½
      * @param drawable
      * @return
      */
     public abstract CActionBar setNavigationMenuBackground(Drawable drawable);
 	
 	/**
-     * ÉèÖÃµ¼º½°´Å¥ÏîµÄ±³¾°
+     * ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½Å¥ï¿½ï¿½Ä±ï¿½ï¿½ï¿½
      * @param resId
      * @return
      */
     public abstract CActionBar setNavigationMenuBackground(int resId);
 	
 	/**
-     * ÉèÖÃµ¼º½°´Å¥¼ä¾à
+     * ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½Å¥ï¿½ï¿½ï¿½
      * @param margin
      * @return
      */
     public abstract CActionBar setNavigationMenuMargin(int margin);
 	
 	/**
-     * ÉèÖÃµ¼º½°´Å¥¼ä¾à
+     * ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½Å¥ï¿½ï¿½ï¿½
      * @param margin
      * @return
      */
     public abstract CActionBar setNavigationMenuMarginLeftAndRight(int margin);
 	
 	/**
-     * ÉèÖÃµ¼º½°´Å¥¼ä¾à
+     * ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½Å¥ï¿½ï¿½ï¿½
      * @param margin
      * @return
      */
     public abstract CActionBar setNavigaitonMenuMarginTopAndBottom(int margin);
 	
 	/**
-     * ÉèÖÃµ¼º½°´Å¥¼ä¾à
+     * ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½Å¥ï¿½ï¿½ï¿½
      * @param margin
      * @return
      */
     public abstract CActionBar setNavigationMenuMargin(int left, int top, int right, int bottom);
 	
 	/**
-     * ÉèÖÃµ¼º½°´Å¥×ÖÌå´óÐ¡
+     * ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½Å¥ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡
      * @param size
      * @return
      */
     public abstract CActionBar setNavigationMenuTextSize(float size);
 	
 	/**
-     * ÉèÖÃµ¼º½×ÖÌåÑÕÉ«
+     * ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«
      * @param color
      * @return
      */
     public abstract CActionBar setNavigationMenuTextColor(ColorStateList color);
 	
 	/**
-     * ÉèÖÃµ¼º½×ÖÌåÑÕÉ«
+     * ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«
      * @param color
      * @return
      */
@@ -386,23 +394,23 @@ public abstract class CActionBar {
     public abstract CActionBar setNavigationMenuTextColorResource(int colorResourceId);
 	
 	/**
-     * ÉèÖÃµ¼º½°´Å¥µÄ×ÖÌåÑùÊ½
+     * ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½Å¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½
      * @param tf
      * @return
      */
     public abstract CActionBar setNavigationMenuTypeface(Typeface tf);
 	
 	/**
-     * ÉèÖÃµ¼º½À¸ÑùÊ½
-     * °üÀ¨£º
-     * µ¼º½À¸±³¾°
-     * µ¼º½À¸¸ß¶È
-     * µ¼º½À¸°´Å¥¼ä¾à
-     * µ¼º½À¸°´Å¥±³¾°
-     * µ¼º½À¸×ÖÌå´óÐ¡
-     * µ¼º½À¸×ÖÌåÑÕÉ«
-     * µ¼º½À¸×ÖÌåÑùÊ½
-     * µ¼º½À¸×ÖÌåÒõÓ°
+     * ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß¶ï¿½
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¥ï¿½ï¿½ï¿½
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¥ï¿½ï¿½ï¿½ï¿½
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó°
      *
      * @param style
      * @return
@@ -410,63 +418,63 @@ public abstract class CActionBar {
     public abstract CActionBar setNavigationBarStyle(int style);
 	
 	/**
-     * ÉèÖÃµ¼º½À¸¸ß¶È
+     * ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß¶ï¿½
      * @param height
      * @return
      */
     public abstract CActionBar setNavigationBarHeight(int height);
 
     /**
-     * ÉèÖÃtabÀ¸±³¾°
+     * ï¿½ï¿½ï¿½ï¿½tabï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      * @param drawable
      * @return
      */
     public abstract CActionBar setTabBarBackground(Drawable drawable);
 
     /**
-     * ÉèÖÃtabÀ¸±³¾°
+     * ï¿½ï¿½ï¿½ï¿½tabï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
      * @param resId
      * @return
      */
     public abstract CActionBar setTabBarBackground(int resId);
 
     /**
-     * ÉèÖÃtab°´Å¥ÏîµÄ±³¾°
+     * ï¿½ï¿½ï¿½ï¿½tabï¿½ï¿½Å¥ï¿½ï¿½Ä±ï¿½ï¿½ï¿½
      * @param drawable
      * @return
      */
     public abstract CActionBar setTabMenuBackground(Drawable drawable);
 
     /**
-     * ÉèÖÃtab°´Å¥ÏîµÄ±³¾°
+     * ï¿½ï¿½ï¿½ï¿½tabï¿½ï¿½Å¥ï¿½ï¿½Ä±ï¿½ï¿½ï¿½
      * @param resId
      * @return
      */
     public abstract CActionBar setTabMenuBackground(int resId);
 
     /**
-     * ÉèÖÃtab°´Å¥¼ä¾à
+     * ï¿½ï¿½ï¿½ï¿½tabï¿½ï¿½Å¥ï¿½ï¿½ï¿½
      * @param margin
      * @return
      */
     public abstract CActionBar setTabMenuMargin(int margin);
 
     /**
-     * ÉèÖÃtab°´Å¥ÏîµÄ×óÓÒ±ß¾à
+     * ï¿½ï¿½ï¿½ï¿½tabï¿½ï¿½Å¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò±ß¾ï¿½
      * @param margin
      * @return
      */
     public abstract CActionBar setTabMenuMarginLeftAndRight(int margin);
 
     /**
-     * ÉèÖÃtab°´Å¥ÏîµÄÉÏÏÂ±ß¾à
+     * ï¿½ï¿½ï¿½ï¿½tabï¿½ï¿½Å¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â±ß¾ï¿½
      * @param margin
      * @return
      */
     public abstract CActionBar setTabMenuMarginTopAndBottom(int margin);
 
     /**
-     * ÉèÖÃ°´Å¥ÏîËÄÖÜ±ß¾à
+     * ï¿½ï¿½ï¿½Ã°ï¿½Å¥ï¿½ï¿½ï¿½ï¿½ï¿½Ü±ß¾ï¿½
      * @param left
      * @param top
      * @param right
@@ -476,21 +484,21 @@ public abstract class CActionBar {
     public abstract CActionBar setTabMenuMenuMargin(int left, int top, int right, int bottom);
 
     /**
-     * ÉèÖÃtab×ÖÌå´óÐ¡
+     * ï¿½ï¿½ï¿½ï¿½tabï¿½ï¿½ï¿½ï¿½ï¿½Ð¡
      * @param size
      * @return
      */
     public abstract CActionBar setTabMenuTextSize(float size);
 	
 	/**
-     * ÉèÖÃtab×ÖÌåÑÕÉ«
+     * ï¿½ï¿½ï¿½ï¿½tabï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«
      * @param color
      * @return
      */
     public abstract CActionBar setTabMenuTextColor(ColorStateList color);
 
     /**
-     * ÉèÖÃtab×ÖÌåÑÕÉ«
+     * ï¿½ï¿½ï¿½ï¿½tabï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«
      * @param color
      * @return
      */
@@ -499,23 +507,23 @@ public abstract class CActionBar {
     public abstract CActionBar setTabMenuTextColorResource(int colorResId);
 
     /**
-     * ÉèÖÃtab°´Å¥µÄ×ÖÌåÑùÊ½
+     * ï¿½ï¿½ï¿½ï¿½tabï¿½ï¿½Å¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½
      * @param tf
      * @return
      */
     public abstract CActionBar setTabMenuTypeface(Typeface tf);
 
     /**
-     * ÉèÖÃtabÀ¸ÑùÊ½
-     * °üÀ¨£º
-     * tabÀ¸±³¾°
-     * tabÀ¸¸ß¶È
-     * tabÀ¸°´Å¥¼ä¾à
-     * tabÀ¸°´Å¥±³¾°
-     * tabÀ¸×ÖÌå´óÐ¡
-     * tabÀ¸×ÖÌåÑÕÉ«
-     * tabÀ¸×ÖÌåÑùÊ½
-     * tabÀ¸×ÖÌåÒõÓ°
+     * ï¿½ï¿½ï¿½ï¿½tabï¿½ï¿½ï¿½ï¿½Ê½
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+     * tabï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+     * tabï¿½ï¿½ï¿½ß¶ï¿½
+     * tabï¿½ï¿½ï¿½ï¿½Å¥ï¿½ï¿½ï¿½
+     * tabï¿½ï¿½ï¿½ï¿½Å¥ï¿½ï¿½ï¿½ï¿½
+     * tabï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡
+     * tabï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«
+     * tabï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½
+     * tabï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó°
      *
      * @param style
      * @return
@@ -523,104 +531,102 @@ public abstract class CActionBar {
     public abstract CActionBar setTabMenuBarStyle(int style);
 
     /**
-     * ÉèÖÃtabÀ¸¸ß¶È
+     * ï¿½ï¿½ï¿½ï¿½tabï¿½ï¿½ï¿½ß¶ï¿½
      * @param height
      * @return
      */
     public abstract CActionBar setTabBarHeight(int height);
 
-    public abstract CActionBar setOnBackButtonClickListener(View.OnClickListener listener);
-
     /**
-     * ActionBarµÄ±êÇ©¿Ø¼þ
+     * ActionBarï¿½Ä±ï¿½Ç©ï¿½Ø¼ï¿½
      */
 	public static abstract class CTab {
 
         /**
-         * »ñÈ¡TabµÄËùÔÚÎ»ÖÃ
+         * ï¿½ï¿½È¡Tabï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½
          * @return
          */
 		public abstract int getPosition();
 
         /**
-         * ÉèÖÃTabµÄ±êÌâ
+         * ï¿½ï¿½ï¿½ï¿½Tabï¿½Ä±ï¿½ï¿½ï¿½
          * @param resId
          * @return
          */
 		public abstract CTab setTitle(int resId);
 
         /**
-         * ÉèÖÃTabµÄ±êÌâ
+         * ï¿½ï¿½ï¿½ï¿½Tabï¿½Ä±ï¿½ï¿½ï¿½
          * @param title
          * @return
          */
 		public abstract CTab setTitle(CharSequence title);
 
         /**
-         * »ñÈ¡TabµÄ±êÌâ
+         * ï¿½ï¿½È¡Tabï¿½Ä±ï¿½ï¿½ï¿½
          * @return
          */
 		public abstract CharSequence getTitle();
 
         /**
-         * ÉèÖÃTabµÄICON
+         * ï¿½ï¿½ï¿½ï¿½Tabï¿½ï¿½ICON
          * @param resId
          * @return
          */
 		public abstract CTab setIcon(int resId);
 
         /**
-         * ÉèÖÃTabµÄICON
+         * ï¿½ï¿½ï¿½ï¿½Tabï¿½ï¿½ICON
          * @param icon
          * @return
          */
 		public abstract CTab setIcon(Drawable icon);
 
         /**
-         * »ñÈ¡TabµÄICON
+         * ï¿½ï¿½È¡Tabï¿½ï¿½ICON
          * @return
          */
 		public abstract Drawable getIcon();
 
         /**
-         * Ñ¡ÖÐµ±Ç°Tab
+         * Ñ¡ï¿½Ðµï¿½Ç°Tab
          */
 		public abstract void select();
 
         /**
-         * ÅÐ¶Ïµ±Ç°TabÊÇ·ñÎªÑ¡ÖÐ×´Ì¬
+         * ï¿½Ð¶Ïµï¿½Ç°Tabï¿½Ç·ï¿½ÎªÑ¡ï¿½ï¿½×´Ì¬
          * @return
          */
 		public abstract boolean isSelected();
 
         /**
-         * ÉèÖÃTag£¬¸Ãtag¿ÉÒÔ×÷ÎªTabµÄÎ¨Ò»±ê¼Ç
+         * ï¿½ï¿½ï¿½ï¿½Tagï¿½ï¿½ï¿½ï¿½tagï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÎªTabï¿½ï¿½Î¨Ò»ï¿½ï¿½ï¿½
          * @param tag
          * @return
          */
 		public abstract CTab setTag(Object tag);
 
         /**
-         * »ñÈ¡Tag
+         * ï¿½ï¿½È¡Tag
          * @return
          */
 		public abstract Object getTag();
 
         /**
-         * ÉèÖÃTabµÄ×Ô¶¨ÒåÊÓÍ¼
+         * ï¿½ï¿½ï¿½ï¿½Tabï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½Í¼
          * @param custom
          * @return
          */
 		public abstract CTab setCustom(View custom);
 
         /**
-         * »ñÈ¡TabµÄ×Ô¶¨ÒåÊÓÍ¼
+         * ï¿½ï¿½È¡Tabï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½Í¼
          * @return
          */
 		public abstract View getCustom();
 
         /**
-         * ÉèÖÃTabÑ¡Ôñ¼àÌýÆ÷
+         * ï¿½ï¿½ï¿½ï¿½TabÑ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          * @param listener
          */
 		public abstract void setTabListener(OnTabSelectedListener listener);
@@ -632,7 +638,7 @@ public abstract class CActionBar {
 	}
 
     /**
-     * TabÑ¡ÖÐ¼àÌýÆ÷
+     * TabÑ¡ï¿½Ð¼ï¿½ï¿½ï¿½ï¿½ï¿½
      */
 	public interface OnTabSelectedListener {
 

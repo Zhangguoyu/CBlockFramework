@@ -52,7 +52,6 @@ public class CActivity extends FragmentActivity {
 		mActionBarImpl.setBackButton(back);
 		mActionBarImpl.setLogo(R.drawable.ic_launcher);
 		mActionBarImpl.setTitle("Demo");
-        mActionBarImpl.setOnBackButtonClickListener(new BackButtonClickListener());
 		mActionBarImpl.addTab(mActionBarImpl.buildTab().setTitle("Demo"))
 			.addTab(mActionBarImpl.buildTab().setTitle("Demo").setIcon(R.drawable.ic_launcher), 0)
 			.addTab(mActionBarImpl.buildTab().setTitle("Demo"));
@@ -124,15 +123,13 @@ public class CActivity extends FragmentActivity {
     public void onBackButtonClick() {
     }
 
+    public void onTitleBarClick(int eventType) {
+
+    }
+
     public CActionBar getSupportActionBar() {
         return mActionBarImpl;
     }
 
-    private final class BackButtonClickListener implements View.OnClickListener {
 
-        @Override
-        public void onClick(View view) {
-            onBackButtonClick();
-        }
-    }
 }

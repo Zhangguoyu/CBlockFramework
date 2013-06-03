@@ -38,6 +38,9 @@ public class CActionBarImpl extends CActionBar {
 		mContext = decor.getContext();
 		mTitleActionBarView = (CTitleActionBarView) decor.findViewById(R.id.actionbar_id);
         mTitleActionBarView.setOnOptionsBarSelectedListener(mOptionsSelectedListener);
+        mTitleActionBarView.setOnTitleViewClickListener(mTitleViewClickListener);
+        mTitleActionBarView.setOnBackButtonClickListener(mBackButtonClickListener);
+
 		mNavigationActionBarView = (CMenuBarView) decor.findViewById(R.id.navbar_id);
         mNavigationActionBarView.setOnMenuItemSelectedListener(mNavigationSelectedListener);
 		mTabs = new ArrayList<TabImpl>();
@@ -463,7 +466,8 @@ public class CActionBarImpl extends CActionBar {
 
     @Override
     public CActionBar setTitleStyle(int titleViewStyle) {
-        return null;
+        mTitleActionBarView.setTitleStyle(titleViewStyle);
+        return this;
     }
 
     private void cleanupTabs() {
@@ -663,12 +667,6 @@ public class CActionBarImpl extends CActionBar {
         return this;
     }
 
-    @Override
-    public CActionBar setOnBackButtonClickListener(View.OnClickListener listener) {
-        mTitleActionBarView.setOnBackButtonClickListener(listener);
-        return this;
-    }
-
     public CMenu newMenu() {
 		return new CMenuBarView.CMenuImpl(mContext);
 	}
@@ -695,6 +693,37 @@ public class CActionBarImpl extends CActionBar {
         @Override
         public void onMenuItemSelected(CMenuBarView view, CMenuItem menuItem) {
             mActivity.onNavigationMenuItemSelected(menuItem);
+        }
+    };
+
+    private final View.OnClickListener mBackButtonClickListener =
+            new View.OnClickListener() {
+
+        @Override
+        public void onClick(View view) {
+            mActivity.onBackButtonClick();
+        }
+    };
+
+    private final View.OnClickListener mTitleViewClickListener = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View view) {
+            switch(view.getId()) {
+                case R.id.actionbar_title:
+                    mActivity.onTitleBarClick(CActionBar.TITLE_EVENT_TYPE_CLICK_MAIN_TITLE);
+                    break;
+                case R.id.actionbar_subtitle:
+                    mActivity.onTitleBarClick(CActionBar.TITLE_EVENT_TYPE_CLICK_SUBTITLE);
+                    break;
+                case R.id.actionbar_left_arrow:
+                    mActivity.onTitleBarClick(CActionBar.TITLE_EVENT_TYPE_CLICK_LEFT_NAV);
+                    break;
+                case R.id.actionbar_right_arrow:
+                    mActivity.onTitleBarClick(CActionBar.TITLE_EVENT_TYPE_CLICK_RIGHT_NAV);
+                    break;
+
+            }
         }
     };
 

@@ -6,4 +6,6 @@
     <item name="actionbar_subtitle" type="id" />
     <item name="main_frame" type="id" />
     <item name="page_frame_id" type="id" />
+    <item name="actionbar_left_arrow" type="id" />
+    <item name="actionbar_right_arrow" type="id" />
 </resources>

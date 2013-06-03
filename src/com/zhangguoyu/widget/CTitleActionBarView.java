@@ -30,7 +30,8 @@ public class CTitleActionBarView extends LinearLayout {
     private View mOptionsBar = null;
 	private TitleViewWrapper mTitleViewWrapper = null;
 
-    private OnBackButtonClickListener mBackButtonListener = new OnBackButtonClickListener();
+    private OnTitleBarClickListener mBackButtonListener = new OnTitleBarClickListener();
+    private OnTitleBarClickListener mTitleViewListener = new OnTitleBarClickListener();
 	
 	public CTitleActionBarView(Context context) {
 		super(context);
@@ -338,22 +339,37 @@ public class CTitleActionBarView extends LinearLayout {
 		}
 		setTitleView(mTitleViewWrapper.getView());
 	}
+
+    void setTitleStyle(int style) {
+        mTitleViewWrapper.setStyle(style);
+    }
 	
 	private class TitleViewWrapper {
 		
 		private View mView = null;
 		
 		private TextView mTxvTitle = null;
-		
 		private TextView mTxvSubTitle = null;
+        private View mBtnLeftArrow = null;
+        private View mBtnRightArrow = null;
+
+        private int mStyle = CActionBar.TITLE_STYLE_SHOW_ONLY_MAIN_TITLE;
 
 		TitleViewWrapper(Context context) {
 			LayoutInflater inflater = (LayoutInflater) context.getSystemService(
 					Context.LAYOUT_INFLATER_SERVICE);
 			mView = inflater.inflate(R.layout.action_bar_title_view, null);
 			mView.setTag(this);
+
 			mTxvTitle = (TextView) mView.findViewById(R.id.actionbar_title);
+            mTxvTitle.setOnClickListener(mTitleViewListener);
 			mTxvSubTitle = (TextView) mView.findViewById(R.id.actionbar_subtitle);
+            mTxvSubTitle.setOnClickListener(mTitleViewListener);
+
+            mBtnLeftArrow = mView.findViewById(R.id.actionbar_left_arrow);
+            mBtnLeftArrow.setOnClickListener(mTitleViewListener);
+            mBtnRightArrow = mView.findViewById(R.id.actionbar_right_arrow);
+            mBtnRightArrow.setOnClickListener(mTitleViewListener);
 		}
 		
 		void setTitle(CharSequence title) {
@@ -361,7 +377,8 @@ public class CTitleActionBarView extends LinearLayout {
 		}
 		
 		void setSubTitle(CharSequence subTitle) {
-			if (mTxvSubTitle.getVisibility() != View.VISIBLE) {
+			if (mTxvSubTitle.getVisibility() != View.VISIBLE
+                    && mStyle != CActionBar.TITLE_STYLE_SHOW_ONLY_MAIN_TITLE) {
 				mTxvSubTitle.setVisibility(View.VISIBLE);
 			}
 			mTxvSubTitle.setText(subTitle);
@@ -370,7 +387,49 @@ public class CTitleActionBarView extends LinearLayout {
 		View getView() {
 			return mView;
 		}
-	}
+
+        void setStyle(int style) {
+            if (mStyle == style) {
+                return;
+            }
+
+            mStyle = style;
+            switch(mStyle) {
+                case CActionBar.TITLE_STYLE_CSTOCK:
+                    if (mBtnLeftArrow.getVisibility() != View.VISIBLE) {
+                        mBtnLeftArrow.setVisibility(View.VISIBLE);
+                    }
+                    if (mBtnRightArrow.getVisibility() != View.VISIBLE) {
+                        mBtnRightArrow.setVisibility(View.VISIBLE);
+                    }
+                    if (mTxvSubTitle.getVisibility() != View.VISIBLE) {
+                        mTxvSubTitle.setVisibility(View.VISIBLE);
+                    }
+                case CActionBar.TITLE_STYLE_SUBTITLED:
+                    if (mBtnLeftArrow.getVisibility() != View.GONE) {
+                        mBtnLeftArrow.setVisibility(View.GONE);
+                    }
+                    if (mBtnRightArrow.getVisibility() != View.GONE) {
+                        mBtnRightArrow.setVisibility(View.GONE);
+                    }
+                    if (mTxvSubTitle.getVisibility() != View.VISIBLE) {
+                        mTxvSubTitle.setVisibility(View.VISIBLE);
+                    }
+                    break;
+                case CActionBar.TITLE_STYLE_SHOW_ONLY_MAIN_TITLE:
+                    if (mBtnLeftArrow.getVisibility() != View.GONE) {
+                        mBtnLeftArrow.setVisibility(View.GONE);
+                    }
+                    if (mBtnRightArrow.getVisibility() != View.GONE) {
+                        mBtnRightArrow.setVisibility(View.GONE);
+                    }
+                    if (mTxvSubTitle.getVisibility() != View.GONE) {
+                        mTxvSubTitle.setVisibility(View.GONE);
+                    }
+                    break;
+            }
+        }
+    }
 
 	public void setTabSelected(int position) {
 		if (mTabBar != null) {
@@ -402,7 +461,11 @@ public class CTitleActionBarView extends LinearLayout {
         mBackButtonListener.listener = listener;
     }
 
-    private final class OnBackButtonClickListener implements OnClickListener {
+    public void setOnTitleViewClickListener(OnClickListener listener) {
+        mTitleViewListener.listener = listener;
+    }
+
+    private final class OnTitleBarClickListener implements OnClickListener {
 
         private OnClickListener listener = null;
 

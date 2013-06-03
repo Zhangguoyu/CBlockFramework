@@ -6,6 +6,9 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.text.TextUtils;
+import android.util.Log;
+
+import java.util.LinkedList;
 
 public class CBlockActivity extends CActivity {
 
