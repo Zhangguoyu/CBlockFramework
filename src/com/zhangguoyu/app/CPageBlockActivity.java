@@ -1,61 +1,159 @@
 package com.zhangguoyu.app;
 
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewParent;
-import com.zhangguoyu.demo.actionbar.R;
-import com.zhangguoyu.widget.CBlockPager;
+import android.text.TextUtils;
+import android.util.Log;
 import com.zhangguoyu.widget.CMenu;
 
 public class CPageBlockActivity extends CBlockActivity {
 
-    private CBlockPager mBlockPager = null;
-    private BlockPageChangeListener mListener = new BlockPageChangeListener();
+    private static final String META_DATA_KEY_PAGE_NAME = "pageName";
+    private static final String KEY_PAGE = "page_index";
+
+    private CPageBlock mPageBlock = null;
+    private int mPageXmlResId = 0;
+    private boolean mInflated = false;
+    private InternalBlockChangedListener mListener = new InternalBlockChangedListener();
+
+    private class InternalBlockChangedListener implements CPageBlock.OnBlockPageChangedListener {
+
+        CPageBlock.OnBlockPageChangedListener mListener = null;
+
+        @Override
+        public void onPageSelected(CPageBlock block, CBlock selected, int position) {
+            if (selected != null) {
+                setCurrentBlock(selected);
+            }
+            if (mListener != null) {
+                mListener.onPageSelected(block, selected, position);
+            }
+        }
+    }
+
+    public void loadBlocksFromResurce(int blockXmlResId) {
+        mPageXmlResId = blockXmlResId;
+        if (mPageBlock == null) {
+            return;
+        }
+        if (mPageBlock != null) {
+            mInflated = true;
+            mPageBlock.inflateBlockPagesFromXmlRes(blockXmlResId);
+        }
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mBlockPager = new CBlockPager(getBaseContext());
-        mBlockPager.setId(R.id.page_frame_id);
-        mBlockPager.setSupportFragmentManager(getSupportFragmentManager());
-        mBlockPager.setOnPageChangeListener(mListener);
-
-        FrameFragment frame = FrameFragment.newInstance(mBlockPager);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.main_frame, frame)
-                .commit();
+        if (mPageBlock == null) {
+            CBlock curr = getBlockManager().getCurrentBlock();
+            if (!(curr instanceof CPageBlock)) {
+                throw new RuntimeException();
+            }
+            mPageBlock = (CPageBlock) curr;
+        }
     }
 
-    public void loadBlocksFromResurce(int blockXmlResId) {
-        mBlockPager.addBlockFromResource(blockXmlResId);
-        dispatchCreateMenu();
+    public void setMute(boolean mute) {
+        mPageBlock.setMute(mute);
     }
 
-    public void addBlockToPage(CBlock block, Bundle args) {
-        mBlockPager.addBlock(block, args);
+    public CPageBlock getPageBlock() {
+        return mPageBlock;
     }
 
-    public void setCurrentItem(int item) {
-        mBlockPager.setCurrentItem(item);
+    public int getBlockPageCount() {
+        return mPageBlock.getBlockCount();
     }
 
-    public void setCurrentItem(int item, boolean smoothScroll) {
-        mBlockPager.setCurrentItem(item, smoothScroll);
+    public CBlock getBlockPageAt(int position) {
+        return mPageBlock.getBlockAt(position);
     }
 
-    public void setOnPageChangeListener(ViewPager.OnPageChangeListener listener) {
-        mListener.customListener = listener;
+    public void setOnBlockPageChangedListener(CPageBlock.OnBlockPageChangedListener listener) {
+        mListener.mListener = listener;
     }
 
-    public void arrowScroll(int direction) {
-        mBlockPager.arrowScroll(direction);
+    public void setOnViewPageChangedListener(ViewPager.OnPageChangeListener listener) {
+        mPageBlock.setOnViewPageChangedListener(listener);
+    }
+
+    public CPageBlockActivity addBlockPage(int blockId) {
+        addBlockPageAtPosition(blockId, -1);
+        return this;
+    }
+
+    public CPageBlockActivity addBlockPage(String blockTag) {
+        addBlockPageAtPosition(blockTag, -1);
+        return this;
+    }
+
+    public CPageBlockActivity addBlockPage(Class<? extends CBlock> blockClass) {
+        addBlockPageAtPosition(blockClass, -1);
+        return this;
+    }
+
+    public CPageBlockActivity addBlockPageAtPosition(Class<? extends CBlock> blockClass,
+            int blockId, String blockTag, CharSequence blockTitle, int contentViewResId) {
+        addBlockPageAtPosition(blockClass, blockId, blockTag, blockTitle, contentViewResId, -1);
+        return this;
+    }
+
+    public CPageBlockActivity addBlockPageAtPosition(int blockId, int position) {
+        mPageBlock.addBlockPageAtPosition(blockId, position);
+        return this;
+    }
+
+    public CPageBlockActivity addBlockPageAtPosition(String blockTag, int position) {
+        mPageBlock.addBlockPageAtPosition(blockTag, position);
+        return this;
+    }
+
+    public CPageBlockActivity addBlockPageAtPosition(Class<? extends CBlock> blockClass, int position) {
+        mPageBlock.addBlockPageAtPosition(blockClass, position);
+        return this;
+    }
+
+    public CPageBlockActivity addBlockPageAtPosition(Class<? extends CBlock> blockClass,
+            int id, String tag, CharSequence title, int contentViewResId, int position) {
+        mPageBlock.addBlockPageAtPosition(blockClass, id, tag, title, contentViewResId, position);
+        return this;
+    }
+
+    public CPageBlockActivity removeBlockPage(int blockId) {
+        mPageBlock.removeBlockPage(blockId);
+        return this;
+    }
+
+    public CPageBlockActivity removeBlockPage(String blockTag) {
+        mPageBlock.removeBlockPage(blockTag);
+
+        return this;
+    }
+
+    public CPageBlockActivity removeBlockPage(Class<? extends CBlock> blockClass) {
+        mPageBlock.removeBlockPage(blockClass);
+        return this;
+    }
+
+    public CPageBlockActivity removeBlockPageAtPosition(int position) {
+        mPageBlock.removeBlockPageAtPosition(position);
+        return this;
+    }
+
+    public void clear() {
+        mPageBlock.clear();
+    }
+
+    public void selectPage(int pageNumber) {
+        mPageBlock.selectPage(pageNumber);
+    }
+
+    public void selectPageSmoothly(int pageNumber) {
+        mPageBlock.selectPageSmoothly(pageNumber);
     }
 
     @Override
@@ -68,7 +166,7 @@ public class CPageBlockActivity extends CBlockActivity {
 
     @Override
     public boolean onCreateOptionsMenu(CMenu menu) {
-        CBlock current = getCurrentBlock();
+        CBlock current = mPageBlock.getCurrentBlock();
         if (current != null) {
             return current.onCreateOptionsMenu(menu);
         }
@@ -77,84 +175,34 @@ public class CPageBlockActivity extends CBlockActivity {
 
     @Override
     public boolean onCreateNavigationMenu(CMenu menu) {
-        CBlock current = getCurrentBlock();
+        CBlock current = mPageBlock.getCurrentBlock();
         if (current != null) {
             return current.onCreateNavigationMenu(menu);
         }
         return super.onCreateNavigationMenu(menu);
     }
 
-    private CBlockFragment getCurrentFragment() {
-        PagerAdapter adapter = mBlockPager.getAdapter();
-        if (adapter != null && (adapter instanceof FragmentStatePagerAdapter)) {
-            Fragment current = ((FragmentStatePagerAdapter) adapter).getItem(
-                    mBlockPager.getCurrentItem());
-            if (current instanceof CBlockFragment) {
-                return (CBlockFragment) current;
-            }
-        }
-        return null;
-    }
-
-    private void findCurrentBlock() {
-        CBlockFragment curr = getCurrentFragment();
-        if (curr != null) {
-            setCurrentBlock(curr.getBlock());
-        }
-    }
-
     private void dispatchCreateMenu() {
-        findCurrentBlock();
         dispatchCreateOptionsMenu();
         dispatchCreateNavigationMenu();
     }
 
-    private class BlockPageChangeListener implements ViewPager.OnPageChangeListener {
-
-        private ViewPager.OnPageChangeListener customListener = null;
-
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            if (customListener != null) {
-                customListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
-            }
-        }
-
-        @Override
-        public void onPageSelected(int position) {
-            dispatchCreateMenu();
-            if (customListener != null) {
-                customListener.onPageSelected(position);
-            }
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int state) {
-
-            if (customListener != null) {
-                customListener.onPageScrollStateChanged(state);
-            }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d("CPageBlockActivity", "@@@ onSaveInstanceState " + outState);
+        if (mPageBlock != null) {
+            outState.putInt(KEY_PAGE, mPageBlock.getCurrentIndex());
         }
     }
 
-    public static class FrameFragment extends Fragment {
-
-        private static View mContentView = null;
-
-        static FrameFragment newInstance(View contentView) {
-            mContentView = contentView;
-            return new FrameFragment();
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            ViewParent p = mContentView.getParent();
-            if (p != null && p instanceof ViewGroup) {
-                ((ViewGroup) p).removeView(mContentView);
-            }
-            return mContentView;
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (mPageBlock != null && savedInstanceState != null) {
+            final int index = savedInstanceState.getInt(KEY_PAGE, 0);
+            mPageBlock.selectPage(index);
         }
     }
+
 }

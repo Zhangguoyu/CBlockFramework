@@ -25,12 +25,20 @@ public class CTextMenuBar extends CMenuBarView {
     }
 
     public CTextMenuBar addTextMenu(CharSequence title) {
-        addTextMenuInternal(title);
+        return addTextMenu(0, title);
+    }
+
+    public CTextMenuBar addTextMenu(int itemId, int titleResId) {
+        return addTextMenu(itemId, getResources().getText(titleResId));
+    }
+
+    public CTextMenuBar addTextMenu(int itemId, CharSequence title) {
+        addTextMenuInternal(itemId, title);
         return this;
     }
 
-    private void addTextMenuInternal(CharSequence title) {
-        CMenuItemImpl impl = new CMenuItemImpl(getContext(), 0, 0, title, null, false);
+    private void addTextMenuInternal(int itemId, CharSequence title) {
+        CMenuItemImpl impl = new CMenuItemImpl(getContext(), 0, itemId, title, null, false);
         addMenuItem(impl);
     }
 }

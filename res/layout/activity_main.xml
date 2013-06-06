@@ -1,15 +1,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:emoney="http://schemas.android.com/apk/res/com.zhangguoyu.demo.actionbar"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity" >
 
-    <com.zhangguoyu.widget.CBlockPager
-        android:id="@+id/demo_pager"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" >
-    </com.zhangguoyu.widget.CBlockPager>
+    <com.zhangguoyu.widget.CLinearLayoutBlock
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            emoney:blockId="@+id/demo_sub_block"
+            emoney:blockName="com.zhangguoyu.app.CPageBlock">
+    </com.zhangguoyu.widget.CLinearLayoutBlock>
 
 </RelativeLayout>

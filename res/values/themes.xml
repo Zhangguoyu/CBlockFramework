@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="CStockTheme" parent="AppTheme">
+        <!--<item name="actionTitleBarStyle"></item>-->
+        <!--<item name="actionTabBarStyle"></item>-->
+        <!--<item name="actionNavigationBarStyle"></item>-->
+    </style>
+</resources>

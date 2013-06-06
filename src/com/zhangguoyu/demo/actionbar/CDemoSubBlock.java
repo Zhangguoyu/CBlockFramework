@@ -5,53 +5,61 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import com.zhangguoyu.app.CBlock;
+import com.zhangguoyu.app.CBlockIntent;
 
 /**
  * Created by Forcs on 13-5-20.
  */
 public class CDemoSubBlock extends CBlock implements View.OnClickListener {
 
-    private Button mBtnPush = null;
-    private Button mBtnPop = null;
+    private static final String LOG_TAG = "CDemoSubBlock";
 
-    private int mNumb = 0;
+    private Button mBtnPush = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.demo2);
-
-        Bundle args = getArguments();
-        if (args != null) {
-            mNumb = args.getInt("numb");
-        }
-
+        setBlockInterceptor(mInterceptor);
         mBtnPush = (Button) findViewById(R.id.push);
 
-        mBtnPush.setText(mBtnPush.getText() + "" + mNumb);
-
+        mBtnPush.setText(mBtnPush.getText());
         mBtnPush.setOnClickListener(this);
-        mBtnPop = (Button) findViewById(R.id.pop);
-        mBtnPop.setOnClickListener(this);
+    }
+
+    @Override
+    public boolean onPrepareStartBlock(CBlockIntent intent) {
+        //startBlock(CDemoSubBlock5.class, null);
+        if (intent.getBlockId() == R.id.demo2_id) {
+            return true;
+        }
+        return false;
     }
 
     @Override
     public void onClick(View view) {
         switch(view.getId()) {
             case R.id.push:
-                Bundle args = new Bundle();
-                args.putInt("numb", ++mNumb);
-                startBlock(CDemoBlock.class, args);
-                break;
-            case R.id.pop:
-                finish();
+                //startBlock(CDemoSubBlock2.class, null);
+                startBlock(new CBlockIntent(R.id.demodemo_id));
                 break;
         }
     }
 
     @Override
-    public void onBackButtonClick() {
+    public boolean onBackButtonClick() {
         Log.d(CDemoSubBlock.class.getSimpleName(), "@@@ onBackButtonClick");
+        return false;
     }
+
+    private BlockInterceptor mInterceptor = new BlockInterceptor() {
+        @Override
+        public boolean onProcess(CBlock src, CBlockIntent intent) {
+            startBlock(new CBlockIntent(R.id.demo2_id));
+            return true;
+        }
+    };
+
+
 }

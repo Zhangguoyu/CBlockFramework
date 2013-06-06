@@ -2,8 +2,8 @@
 <resources>
     <declare-styleable name="ManifestBlock">
         <attr name="name" format="string" />
-        <attr name="id" format="integer" />
-        <attr name="tag" format="reference" />
+        <attr name="id" format="reference" />
+        <attr name="tag" format="string" />
         <attr name="orientation">
             <flag name="portrait" value="1" />
             <flag name="landscape" value="2" />
@@ -12,6 +12,11 @@
         <attr name="title" format="string" />
         <attr name="layout" format="reference" />
         <attr name="isMain" format="boolean" />
+        <attr name="launchMode">
+            <flag name="newInstance" value="1" />
+            <flag name="singleInstance" value="2" />
+        </attr>
+        <attr name="action" format="string" />
     </declare-styleable>
     
 </resources>

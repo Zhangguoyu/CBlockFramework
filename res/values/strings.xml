@@ -8,4 +8,29 @@
     <string name="demo_menu">Menu</string>
     <string name="demo_menu2">Menu2</string>
     <string name="internal_menu_more">More</string>
+
+    <!-- Declaration for DEMO -->
+    <!-- Title -->
+    <string name="demo_app_name">Demo App</string>
+
+    <!-- Tab -->
+    <string name="demo_tab_0">Tab 1</string>
+    <string name="demo_tab_1">Tab 2</string>
+    <string name="demo_tab_2">Tab 3</string>
+    <string name="demo_tab_3">Tab 3</string>
+
+    <!-- Navigation -->
+    <string name="demo_nav_1">Nav 1</string>
+    <string name="demo_nav_2">Nav 2</string>
+    <string name="demo_nav_3">Nav 3</string>
+    <string name="demo_nav_4">Nav 4</string>
+    <string name="demo_nav_5">Nav 5</string>
+    <string name="demo_nav_6">Nav 6</string>
+    <string name="demo_nav_7">Nav 7</string>
+    <string name="demo_nav_8">Nav 8</string>
+    <string name="demo_nav_9">Nav 9</string>
+    <string name="demo_nav_10">Nav 10</string>
+    <string name="demo_nav_11">Nav 11</string>
+    <string name="demo_nav_12">Nav 12</string>
+    <string name="demo_nav_13">Nav 13</string>
 </resources>

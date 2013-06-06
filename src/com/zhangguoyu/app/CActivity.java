@@ -2,6 +2,7 @@ package com.zhangguoyu.app;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
@@ -13,6 +14,8 @@ import com.zhangguoyu.widget.CActionBar.CTab;
 import com.zhangguoyu.demo.actionbar.R;
 
 public class CActivity extends FragmentActivity {
+
+    private static final String LOG_TAG = "CActivity";
 	
 	private FrameLayout mMainFrame = null;
 	private CActionBarImpl mActionBarImpl = null;
@@ -22,8 +25,8 @@ public class CActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		ensureInflateFrame();
 	}
-	
-	@Override
+
+    @Override
 	public void setContentView(int layoutResID) {
 		getLayoutInflater().inflate(layoutResID, mMainFrame);
 	}
@@ -47,14 +50,9 @@ public class CActivity extends FragmentActivity {
 	
 	private void prepareActionBar() {
 		mActionBarImpl = CActionBarImpl.newDefault(this);
-		Button back = new Button(this);
-		back.setText("<");
-		mActionBarImpl.setBackButton(back);
-		mActionBarImpl.setLogo(R.drawable.ic_launcher);
-		mActionBarImpl.setTitle("Demo");
-		mActionBarImpl.addTab(mActionBarImpl.buildTab().setTitle("Demo"))
-			.addTab(mActionBarImpl.buildTab().setTitle("Demo").setIcon(R.drawable.ic_launcher), 0)
-			.addTab(mActionBarImpl.buildTab().setTitle("Demo"));
+        mActionBarImpl.setBackDrawable(android.R.drawable.btn_default);
+		mActionBarImpl.setTitle(getTitle());
+        mActionBarImpl.setOnBackButtonClickListener(new BackButtonClickListener());
 
         onDispatchCreateOptionsMenu();
         onDispatchCreateNavigationMenu();
@@ -113,7 +111,6 @@ public class CActivity extends FragmentActivity {
 	}
 	
 	public boolean onPrepareOptionsMenu(CMenu menu) {
-
 		return true;
 	}
 	
@@ -121,6 +118,7 @@ public class CActivity extends FragmentActivity {
 	}
 
     public void onBackButtonClick() {
+        super.onBackPressed();
     }
 
     public void onTitleBarClick(int eventType) {
@@ -131,5 +129,16 @@ public class CActivity extends FragmentActivity {
         return mActionBarImpl;
     }
 
+    private final class BackButtonClickListener implements View.OnClickListener {
 
+        @Override
+        public void onClick(View view) {
+            onBackButtonClick();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        mActionBarImpl.performBackButtonClick();
+    }
 }

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<manifest
+        xmlns:emoney="http://schemas.android.com/apk/res/com.zhangguoyu.demo.actionbar">
+    <block emoney:name="com.zhangguoyu.demo.actionbar.CDemoMainBlock"
+            emoney:action="cn.emoney.level2.MAIN"
+
+            emoney:orientation=""
+            emoney:id="@id/demo_main_id"
+            emoney:title="@string/demo_app_name"
+            emoney:tag="demo_block_main" />
+
+    <block emoney:name="com.zhangguoyu.demo.actionbar.CDemoTab1Block"
+           emoney:orientation=""
+           emoney:id="@id/demo_tab1_id"
+           emoney:title="@string/demo_tab_0"
+           emoney:tag="demo_block_tab0" />
+
+    <block emoney:name="com.zhangguoyu.demo.actionbar.CDemoTab2Block"
+           emoney:orientation=""
+           emoney:id="@id/demo_tab2_id"
+           emoney:title="@string/demo_tab_1"
+           emoney:tag="demo_block_tab1" />
+
+    <block emoney:name="com.zhangguoyu.demo.actionbar.CDemoTab3Block"
+           emoney:orientation=""
+           emoney:id="@id/demo_tab3_id"
+           emoney:title="@string/demo_tab_2"
+           emoney:tag="demo_block_tab2" />
+
+    <block emoney:name="com.zhangguoyu.demo.actionbar.CDemoTab4Block"
+           emoney:orientation=""
+           emoney:id="@id/demo_tab4_id"
+           emoney:title="@string/demo_tab_3"
+           emoney:tag="demo_block_tab3" />
+
+    <block emoney:name="com.zhangguoyu.demo.actionbar.CDemoNav1Block"
+           emoney:orientation=""
+           emoney:id="@id/demo_nav1_id"
+           emoney:title="@string/demo_nav_1"
+           emoney:tag="demo_block_nav1"
+           emoney:launchMode="singleInstance" />
+
+    <block emoney:name="com.zhangguoyu.demo.actionbar.CDemoNav2Block"
+           emoney:orientation=""
+           emoney:id="@id/demo_nav2_id"
+           emoney:title="@string/demo_nav_2"
+           emoney:tag="demo_block_nav2"
+           emoney:launchMode="singleInstance" />
+
+    <block emoney:name="com.zhangguoyu.demo.actionbar.CDemoNav3Block"
+           emoney:orientation=""
+           emoney:id="@id/demo_nav3_id"
+           emoney:title="@string/demo_nav_3"
+           emoney:tag="demo_block_nav3"
+           emoney:launchMode="singleInstance" />
+
+    <block emoney:name="com.zhangguoyu.demo.actionbar.CDemoNav4Block"
+           emoney:orientation=""
+           emoney:id="@id/demo_nav4_id"
+           emoney:title="@string/demo_nav_4"
+           emoney:tag="demo_block_nav4"
+           emoney:launchMode="singleInstance" />
+
+    <block emoney:name="com.zhangguoyu.demo.actionbar.CDemoNav5Block"
+           emoney:orientation=""
+           emoney:id="@id/demo_nav5_id"
+           emoney:title="@string/demo_nav_5"
+           emoney:tag="demo_block_nav5"
+           emoney:launchMode="singleInstance" />
+</manifest>

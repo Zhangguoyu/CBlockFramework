@@ -667,6 +667,12 @@ public class CActionBarImpl extends CActionBar {
         return this;
     }
 
+    @Override
+    public CActionBar setOnBackButtonClickListener(View.OnClickListener listener) {
+        mTitleActionBarView.setOnBackButtonClickListener(listener);
+        return this;
+    }
+
     public CMenu newMenu() {
 		return new CMenuBarView.CMenuImpl(mContext);
 	}
@@ -677,6 +683,10 @@ public class CActionBarImpl extends CActionBar {
 
     public void inflatdOptionsBarByMenu(CMenu menu) {
         mTitleActionBarView.inflateOptionsBarByMenu(menu);
+    }
+
+    public void performBackButtonClick() {
+        mTitleActionBarView.performBackButtonClick();
     }
 
     private final CMenuBarView.OnMenuItemSelectedListener mOptionsSelectedListener =

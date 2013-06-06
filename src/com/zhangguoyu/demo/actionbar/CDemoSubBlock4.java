@@ -10,10 +10,11 @@ import com.zhangguoyu.widget.CMenu;
  */
 public class CDemoSubBlock4 extends CBlock {
 
+    private static final String LOG_TAG = CDemoSubBlock4.class.getSimpleName();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("CDemoSubBlock4", "@@@ onCreate " + getClass().getName());
         setContentView(R.layout.demo2);
     }
 

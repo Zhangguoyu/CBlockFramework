@@ -2,11 +2,14 @@
 
 <manifest
         xmlns:emoney="http://schemas.android.com/apk/res/com.zhangguoyu.demo.actionbar">
-    <block emoney:name="com.zhangguoyu.demo.actionbar.CDemoBlock"
-            emoney:layout="@layout/demo"
-            emoney:orientation=""
-            emoney:id="@+id/demo_id"
-            emoney:title="@string/demo_menu"
-            emoney:tag="@string/demo_menu"
-            emoney:isMain="true"/>
+
+    <block emoney:name="com.zhangguoyu.demo.actionbar.CDemoPageBlock"
+           emoney:action="cn.emoney.level2.MAIN"
+           emoney:title="@string/demo_menu"/>
+    <block emoney:name="com.zhangguoyu.demo.actionbar.CDemoSubBlock2"
+           emoney:id="@id/demodemo_id"
+           emoney:title="@string/demo_menu"/>
+    <block emoney:name="com.zhangguoyu.demo.actionbar.CDemoSubBlock5"
+           emoney:id="@id/demo2_id"
+           emoney:title="@string/demo_menu"/>
 </manifest>

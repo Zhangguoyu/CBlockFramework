@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:emoney="http://schemas.android.com/apk/res/com.zhangguoyu.demo.actionbar"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/demo_nav1_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="This's is Nav1" />
+
+    <com.zhangguoyu.widget.CFrameLayoutBlock
+        android:id="@+id/demo_nav1_sub_content_a"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+
+        emoney:blockName="com.zhangguoyu.demo.actionbar.CDemoNav1SubBlockA"
+        emoney:blockId="@+id/demo_block_nav1_sub_a_id"/>
+
+    <com.zhangguoyu.widget.CFrameLayoutBlock
+        android:id="@+id/demo_nav1_sub_content_b"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+
+        emoney:blockName="com.zhangguoyu.demo.actionbar.CDemoNav1SubBlockB"
+        emoney:blockId="@+id/demo_block_nav1_sub_b_id"/>
+
+</RelativeLayout>

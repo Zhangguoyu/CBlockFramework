@@ -2,8 +2,13 @@ package com.zhangguoyu.widget;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Rect;
+import android.graphics.drawable.ColorDrawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.MotionEvent;
+import android.view.TouchDelegate;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.PopupWindow;
@@ -24,7 +29,7 @@ public class CNavigationActionBarView extends CMenuBarView {
     }
 
     public CNavigationActionBarView(Context context, AttributeSet attrs) {
-        super(context, attrs, R.attr.navigationBarStyle);
+        super(context, attrs);
     }
 
     public CNavigationActionBarView(Context context, AttributeSet attrs, int defStyle) {
@@ -33,7 +38,7 @@ public class CNavigationActionBarView extends CMenuBarView {
 
     @Override
     protected int getDefaultDisplayCountLimits() {
-        return 5;
+        return 6;
     }
 
     @Override
@@ -48,6 +53,10 @@ public class CNavigationActionBarView extends CMenuBarView {
             return;
         }
 
+        if (moreItem == null || !moreItem.hasSubMenu()) {
+            return;
+        }
+
         if(mMenuPanel == null) {
             mMenuPanelLayout = new SubMenuPanelLayout(getContext());
             mMenuPanelLayout.setBackgroundColor(Color.BLUE);
@@ -55,16 +64,40 @@ public class CNavigationActionBarView extends CMenuBarView {
             FrameLayout.LayoutParams p = new FrameLayout.LayoutParams(
                     FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
             p.gravity = Gravity.BOTTOM;
+            p.bottomMargin = getBottom()-getTop();
             FrameLayout container = new FrameLayout(getContext());
             container.addView(mMenuPanelLayout, p);
 
-            mMenuPanel = new PopupWindow(container, LayoutParams.MATCH_PARENT, getTop());
-            mMenuPanel.setOutsideTouchable(true);
+            mMenuPanel = new PopupWindow(container, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+            //mMenuPanel.setOutsideTouchable(true);
+            mMenuPanel.setTouchable(true);
+            mMenuPanel.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            mMenuPanel.setTouchInterceptor(new OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+
+                    final int menuPanelTop = mMenuPanelLayout.getTop();
+                    final Rect r = new Rect();
+                    mMenuPanelLayout.getDrawingRect(r);
+                    final Rect menuPanelRect = new Rect(
+                            r.left, r.top+menuPanelTop,
+                            r.right, r.bottom+menuPanelTop);
+                    if (!menuPanelRect.contains((int)motionEvent.getX(),
+                            (int)motionEvent.getY())) {
+                        if (mMenuPanel != null && mMenuPanel.isShowing()) {
+                            mMenuPanel.dismiss();
+                        }
+                    }
+
+                    return false;
+                }
+            });
+
         }
 
         if (!mMenuPanel.isShowing()) {
             updateMenuItem(moreItem);
-            mMenuPanel.showAtLocation(this, Gravity.BOTTOM|Gravity.LEFT, 0, getBottom()-getTop());
+            mMenuPanel.showAtLocation(this, Gravity.BOTTOM|Gravity.LEFT, 0, 0);
         }
     }
 

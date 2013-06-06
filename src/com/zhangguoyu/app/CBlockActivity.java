@@ -1,47 +1,96 @@
 package com.zhangguoyu.app;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.text.TextUtils;
-import android.util.Log;
+import android.os.Handler;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import com.zhangguoyu.demo.actionbar.R;
+import com.zhangguoyu.widget.CFrameLayoutBlock;
+import com.zhangguoyu.widget.CMenu;
+import com.zhangguoyu.widget.CMenuItem;
 
-import java.util.LinkedList;
+public class CBlockActivity extends CActivity implements CBlockManager.OnBlockStackChangedListener {
 
-public class CBlockActivity extends CActivity {
-
-	private static final String BLOCK_TAG = "cn.emoney.level2.block";
+	private static final String BLOCK_MANAGER_TAG = "activity:block_manager";
     private static final String META_DATA_KEY_MANIFEST = "blockManifest";
     private CBlockManager mBlockManager = null;
 
     private CBlock mCurrentBlock = null;
+    private boolean mNullBackStack = true;
+
+    private Handler mHandler = new Handler();
+    private BroadcastReceiver mReceiver = new InternalBroadcastReceiver();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+        CFrameLayoutBlock root = new CFrameLayoutBlock(getBaseContext());
+        root.setId(R.id.main_frame_block);
+        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        setContentView(root, lp);
+
         mBlockManager = CBlockManager.newInstance(this);
+        mBlockManager.addBlockStackChangedListener(this);
         getSupportActionBar().setDisplayShowBackButtonEnable(false);
 
 		try {
 			ActivityInfo info = getPackageManager().getActivityInfo(
 					getComponentName(), PackageManager.GET_META_DATA);
 			final Bundle metaData = info.metaData;
-            int manifestResId = metaData.getInt(META_DATA_KEY_MANIFEST);
-
-            mBlockManager.parseBlockMainfestFromXml(manifestResId);
+            if (metaData != null) {
+                int manifestResId = metaData.getInt(META_DATA_KEY_MANIFEST);
+                if (manifestResId > 0) {
+                    mBlockManager.parseBlockMainfestFromXml(manifestResId);
+                }
+            }
 
 		} catch (NameNotFoundException e) {
 			e.printStackTrace();
         }
 
+        //step 1:Attach to current context
+        mBlockManager.attachToActivity();
+        //step 2:restore the saved state
+        Bundle savedState = null;
+        if (savedInstanceState != null) {
+            savedState = savedInstanceState.getBundle(BLOCK_MANAGER_TAG);
+        }
+        if (savedState != null) {
+            mBlockManager.restoreState(savedState);
+        }
+        //step 3:create
         mBlockManager.dispatchCreate();
-//        if (savedInstanceState != null) {
-//            Parcelable state = savedInstanceState.getParcelable(BLOCK_TAG);
-//            mBlockManager.restoreState(state);
-//        }
+
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = getIntent();
+                if (intent != null) {
+                    CBlockIntent blockIntent = intent.getParcelableExtra(CBlock.INTENT_TAG);
+                    if (blockIntent != null) {
+                        startBlock(blockIntent);
+                    }
+                }
+            }
+        });
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Intent.ACTION_SCREEN_ON);
+        filter.addAction(Intent.ACTION_SCREEN_OFF);
+        registerReceiver(mReceiver, filter);
+
 	}
 
     @Override
@@ -72,86 +121,67 @@ public class CBlockActivity extends CActivity {
     protected void onDestroy() {
         super.onDestroy();
         mBlockManager.dispatchDestroy();
+        mBlockManager.removeBlockStackChangedListener(this);
+        unregisterReceiver(mReceiver);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mBlockManager.dispatchConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mBlockManager.dispatchLowMemory();
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        Parcelable saveState = mBlockManager.saveState();
-        if (saveState != null) {
-            outState.putParcelable(BLOCK_TAG, saveState);
+        Bundle saveState = mBlockManager.saveState();
+        if (!saveState.isEmpty()) {
+            outState.putBundle(BLOCK_MANAGER_TAG, saveState);
         }
     }
 
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
+    public void startBlock(CBlockIntent intent) {
+        startBlockForResult(intent, -1);
     }
 
-    public void startBlock(Object tag, Bundle args) {
-        CBlockManager.CBlockInfo blockInfo = mBlockManager.findBlockInfoWithTag(tag);
-        if (blockInfo == null) {
-            throw new CBlockNotFoundException();
-        }
-        final String className = blockInfo.className;
-        if (TextUtils.isEmpty(className)) {
-            throw new CBlockNotFoundException();
-        }
-
-        try {
-            startBlock(getClassLoader().loadClass(className), args);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
+    public void startBlockForResult(CBlockIntent intent, int requestCode) {
+        mBlockManager.execStartBlockForResult(R.id.main_frame_block, intent, requestCode, false);
     }
 
-    public void startBlock(int id, Bundle args) {
-
-        CBlockManager.CBlockInfo blockInfo = mBlockManager.findBlockInfoById(id);
-        if (blockInfo == null) {
-            throw new CBlockNotFoundException();
-        }
-
-        final String className = blockInfo.className;
-        if (TextUtils.isEmpty(className)) {
-            throw new CBlockNotFoundException();
-        }
-
-        try {
-            startBlock(getClassLoader().loadClass(className), args);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+    public void startBlockImmediately(CBlockIntent intent) {
+        startBlockForResultImmediately(intent, -1);
     }
 
-    public void startBlock(Class<?> blockClass, Bundle args) {
-        try {
-            Object o = blockClass.newInstance();
-            if (o != null && (o instanceof CBlock)) {
-
-                final CBlock target = (CBlock) o;
-                target.setArguments(args);
-
-            }
-
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+    public void startBlockForResultImmediately(CBlockIntent intent, int requestCode) {
+        mBlockManager.execStartBlockForResult(R.id.main_frame_block, intent, requestCode, true);
     }
 
-    public void finishBlock() {
+    public void finishCurrentBlock() {
+        mBlockManager.execFinish();
+    }
 
+    public CBlock findBlockById(int id) {
+        return null;
+    }
+
+    public CBlock findBlockWithTag(String tag) {
+        return null;
     }
 
     @Override
     public void onBackButtonClick() {
-        super.onBackButtonClick();
-
-        if (mCurrentBlock != null) {
-            mCurrentBlock.onBackButtonClick();
+        if (mNullBackStack) {
+            super.onBackButtonClick();
+        } else {
+            if (!mBlockManager.dispatchBackButtonClick()) {
+                finishCurrentBlock();
+            }
         }
     }
 
@@ -163,13 +193,65 @@ public class CBlockActivity extends CActivity {
         mCurrentBlock = current;
     }
 
-    void attachMainBlock(CBlock main) {
-        mCurrentBlock = main;
-        main.attachToActivity(this);
-    }
-
     public CBlock getCurrentBlock() {
         return mCurrentBlock;
     }
 
+    @Override
+    protected void onDispatchCreateOptionsMenu() {
+    }
+
+    @Override
+    protected void onDispatchCreateNavigationMenu() {
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(CMenu menu) {
+        return super.onCreateOptionsMenu(menu)
+                || mBlockManager.dispatchCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onCreateNavigationMenu(CMenu menu) {
+        return super.onCreateNavigationMenu(menu)
+                || mBlockManager.dispatchCreateNavigationMenu(menu);
+    }
+
+    @Override
+    public void onOptionsMenuItemSelected(CMenuItem item) {
+        super.onOptionsMenuItemSelected(item);
+        mBlockManager.dispatchOptionsMenuItemSelected(item);
+    }
+
+    @Override
+    public void onNavigationMenuItemSelected(CMenuItem item) {
+        super.onNavigationMenuItemSelected(item);
+        mBlockManager.dispatchNavigationMenuItemSelected(item);
+    }
+
+
+    @Override
+    public void onPush(CBlock block, int size) {
+        mNullBackStack = false;
+        getSupportActionBar().setDisplayShowBackButtonEnable(true);
+    }
+
+    @Override
+    public void onPop(CBlock block, int size) {
+        mNullBackStack = !(size > 0);
+        getSupportActionBar().setDisplayShowBackButtonEnable(size>0);
+    }
+
+    private final class InternalBroadcastReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            final String action = intent.getAction();
+            if (Intent.ACTION_SCREEN_ON.equals(action)) {
+                mBlockManager.dispatchScreenOn();
+            } else if (Intent.ACTION_SCREEN_OFF.equals(action)) {
+                mBlockManager.dispatchScreenOff();
+            }
+        }
+    }
 }

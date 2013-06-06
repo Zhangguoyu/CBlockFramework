@@ -50,11 +50,11 @@ public class CTitleActionBarView extends LinearLayout {
 	}
 	
 	private void init() {
+		ensureTitleBarExist();
 		setOrientation(LinearLayout.VERTICAL);
 	}
 	
 	public void setBackButton(View view) {
-		ensureTitleBarExist();
 		if (mBackButton != null) {
 			mTitleBar.removeView(mBackButton);
 		}
@@ -67,7 +67,6 @@ public class CTitleActionBarView extends LinearLayout {
 	}
 	
 	public void setHomeView(View view) {
-		ensureTitleBarExist();
 		if (mHomeView != null) {
 			mTitleBar.removeView(mHomeView);
 		}
@@ -85,7 +84,6 @@ public class CTitleActionBarView extends LinearLayout {
 	
 
 	public void setCustomView(View view) {
-		ensureTitleBarExist();
 		if (mCustomView != null) {
 			mTitleBar.removeView(mCustomView);
 		}
@@ -105,7 +103,6 @@ public class CTitleActionBarView extends LinearLayout {
 	}
 	
 	public void setTitleView(View view) {
-		ensureTitleBarExist();
 		if (mTitleViewContainer == null && view != null) {
 			mTitleViewContainer = new FrameLayout(getContext());
 			LayoutParams p = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
@@ -140,7 +137,6 @@ public class CTitleActionBarView extends LinearLayout {
 	}
 
 	public void setMenus(View view) {
-		ensureTitleBarExist();
 		if (mOptionsBar != null) {
 			mTitleBar.removeView(mOptionsBar);
 		}
@@ -160,6 +156,7 @@ public class CTitleActionBarView extends LinearLayout {
 			return;
 		}
 		mTitleBar = new LinearLayout(getContext());
+		setMenus(new COptionsBarView(getContext()));
 		int layoutHeight = getContext().getResources().getDimensionPixelSize(
 				R.dimen.actionbar_default_height);
 		LayoutParams p = new LayoutParams(LayoutParams.MATCH_PARENT, layoutHeight);
@@ -190,7 +187,7 @@ public class CTitleActionBarView extends LinearLayout {
 		if(mTabBar != null) {
 			return;
 		}
-        setMenus(new COptionsBarView(getContext()));
+        
 		mTabBar = new CTabBarView(getContext());
 		LayoutParams p = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 		addView(mTabBar, p);
@@ -438,7 +435,7 @@ public class CTitleActionBarView extends LinearLayout {
 	}
 
     public void inflateOptionsBarByMenu(CMenu menu) {
-        if (menu == null && menu.getItemCount() == 0) {
+        if (menu == null || menu.getItemCount() == 0) {
             return;
         }
 
@@ -474,6 +471,24 @@ public class CTitleActionBarView extends LinearLayout {
             if (listener != null) {
                 listener.onClick(view);
             }
+        }
+    }
+
+    private final class OnBackButtonClickListener implements OnClickListener {
+
+        private OnClickListener listener = null;
+
+        @Override
+        public void onClick(View view) {
+            if (listener != null) {
+                listener.onClick(view);
+            }
+        }
+    }
+
+    public void performBackButtonClick() {
+        if (mBackButton != null) {
+            mBackButton.performClick();
         }
     }
 

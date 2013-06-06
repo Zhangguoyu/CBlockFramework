@@ -218,7 +218,7 @@ public class CMenuBarView extends CButtonBarView {
         }
 
 		final int usedSize = mUsedItems.size();
-		if(usedSize < mDisplayCountLimits) {
+		if(usedSize <= mDisplayCountLimits) {
 
 			mUsedItems.add(item);
 			final MenuItemView menuItem = createMenuItemView(item);
@@ -348,18 +348,17 @@ public class CMenuBarView extends CButtonBarView {
         public void onClick(View view) {
         	MenuItemView itemView = (MenuItemView) view;
         	final CMenuItemImpl item = itemView.getMenuItem();
-            mCurrentSelectedItem = item;
+
             final int tabCount = getChildCount();
             for (int i = 0; i < tabCount; i++) {
                 final View child = getChildAt(i);
                 child.setSelected(child == view);
             }
-
+            onCreateSubMenuPanel(item);
+            mCurrentSelectedItem = item;
             if (mMenuItemSelectedListener != null) {
                 mMenuItemSelectedListener.onMenuItemSelected(CMenuBarView.this, item);
             }
-
-            onCreateSubMenuPanel(item);
         }
     }
 

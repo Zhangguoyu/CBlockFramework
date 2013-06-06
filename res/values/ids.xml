@@ -6,6 +6,24 @@
     <item name="actionbar_subtitle" type="id" />
     <item name="main_frame" type="id" />
     <item name="page_frame_id" type="id" />
+    <item name="demodemo_id" type="id" />
+    <item name="demo2_id" type="id" />
+
+    <item name="demo_tab1_id" type="id" />
+    <item name="demo_tab2_id" type="id" />
+    <item name="demo_tab3_id" type="id" />
+    <item name="demo_tab4_id" type="id" />
+
+    <item name="demo_nav1_id" type="id" />
+    <item name="demo_nav2_id" type="id" />
+    <item name="demo_nav3_id" type="id" />
+    <item name="demo_nav4_id" type="id" />
+    <item name="demo_nav5_id" type="id" />
+
+    <item name="demo_main_id" type="id" />
+
     <item name="actionbar_left_arrow" type="id" />
     <item name="actionbar_right_arrow" type="id" />
+
+    <item name="main_frame_block" type="id" />
 </resources>
